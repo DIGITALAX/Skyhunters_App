@@ -1,0 +1,43 @@
+{
+  "Home": {
+    "pin": "Fijar",
+    "Hogar": "Hogar",
+    "Marcadores": "Marcadores",
+    "Buscar": "Buscar",
+    "Actividad": "Actividad",
+    "Perfil": "Perfil",
+    "Fabrica": "Fábrica",
+    "ParaTi": "Para Ti",
+    "searching": "Buscar...",
+    "Memes": "Memes",
+    "Ropa": "Ropa Callejera",
+    "Pegatinas": "Pegatinas",
+    "Moneda": "Monedas",
+    "conexion": "Conéctese",
+    "crear": "Crear Cuenta",
+    "salir": "Salir",
+    "aleatorio": "Billetera Quemadora",
+    "billetera": "Su Billetera",
+    "copiado": "¡Copiado!",
+    "clave": "Copie Su Clave Privada",
+    "reiniciar": "Nueva Billetera Aleatoria",
+    "social": "Cuentas Sociales",
+    "Tuyas": "Tus Publicaciones",
+    "TeGusta": "Te Gusta",
+    "publicar": "¿Publicar Algo?",
+    "Todo": "Todo",
+    "Respuestas": "Respuestas",
+    "Menciones": "Menciones",
+    "Citas": "Citas",
+    "Republicaciones": "Republicaciones",
+    "Solicitudes": "Solicitudes",
+    "perfiles": "Perfiles",
+    "publicaciones": "Publicaciones",
+    "marcadoresvacios": "Aún no hay marcadores.",
+    "actividadvacia": "Aún no hay actividad.",
+    "enviar": "Publicar"
+  },
+  "404": {
+    "nada": "Error 404: La página ha sido secuestrada por NPCs rebeldes. Estamos negociando su liberación."
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "Home": {
+    "pin": "Pin",
+    "Hogar": "Home",
+    "Marcadores": "Bookmarks",
+    "Buscar": "Search",
+    "Actividad": "Activity",
+    "Perfil": "Profile",
+    "Fabrica": "Factory",
+    "ParaTi": "For You",
+    "searching": "Search...",
+    "Memes": "Memes",
+    "Ropa": "Streetwear",
+    "Pegatinas": "Stickers",
+    "Moneda": "Coins",
+    "conexion": "Connect",
+    "crear": "Create Account",
+    "salir": "Log Out",
+    "aleatorio": "Burner Wallet",
+    "billetera": "Your Wallet",
+    "copiado": "Copied!",
+    "clave": "Copy Your Private Key",
+    "reiniciar": "New Random Wallet",
+    "social": "Social Accounts",
+    "Tuyas": "Your Publications",
+    "TeGusta": "Liked",
+    "publicar": "Share Something?",
+    "Todo": "All",
+    "Respuestas": "Replies",
+    "Menciones": "Mentions",
+    "Citas": "Quotes",
+    "Republicaciones": "Mirrors",
+    "Solicitudes": "Requests",
+    "perfiles": "Profiles",
+    "publicaciones": "Publications",
+    "marcadoresvacios": "No Bookmarks yet.",
+    "actividadvacia": "No Activity yet.",
+    "enviar": "Post"
+  },
+  "404": {
+    "nada": "Error 404: This page has been hijacked by rogue NPCs. We are negotiating it's liberation."
+  }
+}
