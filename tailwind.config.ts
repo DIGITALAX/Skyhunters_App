@@ -16,6 +16,11 @@ export default {
         cielo: "#2B7FD5",
         blanco: "#E7F3F6",
       },
+      fontFamily: {
+        vcr: "Vcr",
+        bit: "Bitblox",
+        mana: "Manaspace",
+      },
     },
   },
   plugins: [],

@@ -11,4 +11,25 @@ export type BarProps = {
   setAbrirBar: (e: SetStateAction<boolean>) => void;
   router: AppRouterInstance;
   abrirBar: boolean;
+  setPantalla: (e: SetStateAction<Pantalla>) => void;
+  pantalla: Pantalla;
+  dict: any;
+};
+
+export type CambioProps = {
+  pantalla: Pantalla;
+  dict: any;
+};
+
+export enum Pantalla {
+  Estudio = "Estudio",
+  Crear = "Crear",
+  Agentes = "Agentes",
+  Cuenta = "Cuenta",
+  Chat = "Chat",
+  Piscinas = "Piscinas"
+}
+
+export type CambioElementoProps = {
+  dict: any;
 };

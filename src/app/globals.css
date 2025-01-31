@@ -2,7 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+@font-face {
+    font-family: "Bitblox";
+    src: url("/fonts/Bitblox.oft");
+}
+
+@font-face {
+    font-family: "Vcr";
+    src: url("/fonts/Vcr.ttf");
+}
+
+@font-face {
+    font-family: "Manaspace";
+    src: url("/fonts/Manaspace.oft");
+}
+
+html {
  background-color: #2B7FD5;
 }
 
