@@ -1,6 +1,5 @@
 import type { NextConfig } from "next";
 
-
 const nextConfig: NextConfig = {
   reactStrictMode: false,
   experimental: {
@@ -47,6 +46,25 @@ const nextConfig: NextConfig = {
     });
 
     return headersConfig;
+  },
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    config.plugins.push(
+      new webpack.IgnorePlugin({
+        resourceRegExp: /^phaser3spectorjs$/,
+      })
+    );
+
+    config.experiments = {
+      asyncWebAssembly: true,
+      syncWebAssembly: true,
+      layers: true,
+    };
+
+    if (!isServer) {
+      config.output.webassemblyModuleFilename = "static/wasm/[modulehash].wasm";
+    }
+
+    return config;
   },
 };
 

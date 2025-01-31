@@ -10,7 +10,7 @@ import {
   testnet as storageTestnet,
 } from "@lens-protocol/storage-node-client";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
-import { LensConnected } from "./components/Common/types/common.types";
+import { Escena } from "./components/Estudio/types/Estudio.types";
 
 export const config = createConfig(
   getDefaultConfig({
@@ -39,40 +39,25 @@ export const AnimationContext = createContext<
 
 export const ModalContext = createContext<
   | {
-      imageView: string | undefined;
-      setImageView: (e: SetStateAction<string | undefined>) => void;
-      indexer: string | undefined;
-      setIndexer: (e: SetStateAction<string | undefined>) => void;
-      notification: string | undefined;
-      setNotification: (e: SetStateAction<string | undefined>) => void;
-      lensClient: PublicClient<Context> | undefined;
-      createAccount: boolean;
-      setCreateAccount: (e: SetStateAction<boolean>) => void;
-      signless: boolean;
-      setSignless: (e: SetStateAction<boolean>) => void;
-      lensConnected: LensConnected | undefined;
-      setLensConnected: (e: SetStateAction<LensConnected | undefined>) => void;
-      storageClient: StorageClient;
+      clienteLens: PublicClient<Context> | undefined;
+      clienteAlmacenamiento: StorageClient;
+      escenas: Escena[];
+      setEscenas: (e: SetStateAction<Escena[]>) => void;
+      escena: undefined | string;
+      setEscena: (e: SetStateAction<undefined | string>) => void;
     }
   | undefined
 >(undefined);
 
 export default function Providers({ children }: { children: React.ReactNode }) {
-  const [lensConnected, setLensConnected] = useState<
-    LensConnected | undefined
-  >();
-  const [indexer, setIndexer] = useState<string | undefined>();
-  const [imageView, setImageView] = useState<string | undefined>();
-  const [notification, setNotification] = useState<string | undefined>();
-  const [pageChange, setPageChange] = useState<boolean>(false);
-  const [signless, setSignless] = useState<boolean>(false);
-  const [createAccount, setCreateAccount] = useState<boolean>(false);
-  const [lensClient, setLensClient] = useState<PublicClient | undefined>();
-  const storageClient = StorageClient.create(storageTestnet);
+  const [escena, setEscena] = useState<string>();
+  const [clienteLens, setClienteLens] = useState<PublicClient | undefined>();
+  const clienteAlmacenamiento = StorageClient.create(storageTestnet);
+  const [escenas, setEscenas] = useState<Escena[]>([]);
 
   useEffect(() => {
-    if (!lensClient) {
-      setLensClient(
+    if (!clienteLens) {
+      setClienteLens(
         PublicClient.create({
           environment: testnet,
           storage: window.localStorage,
@@ -80,6 +65,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       );
     }
   }, []);
+
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
@@ -88,33 +74,18 @@ export default function Providers({ children }: { children: React.ReactNode }) {
             "--ck-font-family": '"Jackey2", cursive',
           }}
         >
-          <AnimationContext.Provider
+          <ModalContext.Provider
             value={{
-              pageChange,
-              setPageChange,
+              clienteLens,
+              clienteAlmacenamiento,
+              escena,
+              escenas,
+              setEscenas,
+              setEscena,
             }}
           >
-            <ModalContext.Provider
-              value={{
-                imageView,
-                setImageView,
-                lensClient,
-                createAccount,
-                setCreateAccount,
-                lensConnected,
-                setLensConnected,
-                indexer,
-                setIndexer,
-                notification,
-                setNotification,
-                storageClient,
-                signless,
-                setSignless,
-              }}
-            >
-              {children}
-            </ModalContext.Provider>
-          </AnimationContext.Provider>
+            {children}
+          </ModalContext.Provider>
         </ConnectKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
