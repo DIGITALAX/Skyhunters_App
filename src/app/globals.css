@@ -4,7 +4,7 @@
 
 @font-face {
     font-family: "Bitblox";
-    src: url("/fonts/Bitblox.oft");
+    src: url("/fonts/Bitblox.otf");
 }
 
 @font-face {
@@ -14,7 +14,7 @@
 
 @font-face {
     font-family: "Manaspace";
-    src: url("/fonts/Manaspace.oft");
+    src: url("/fonts/Manaspace.ttf");
 }
 
 html {

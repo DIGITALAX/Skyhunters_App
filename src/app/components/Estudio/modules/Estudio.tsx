@@ -15,15 +15,19 @@ const Estudio: FunctionComponent<CambioElementoProps> = (): JSX.Element => {
   );
 
   return (
-    <Juego
-      escena={contexto?.escena!}
-      escenas={contexto?.escenas!}
-      setEscenas={contexto?.setEscenas!}
-      setNpc={setNpc}
-      setCargando={setCargando}
-      cargando={cargando}
-      npc={npc}
-    />
+    <div className="relative flex w-full h-full pb-10 px-10">
+      <div className="relative w-full h-full border-cielo md:border-8 flex overflow-hidden rounded-md bg-cielo">
+        <Juego
+          escena={contexto?.escena!}
+          escenas={contexto?.escenas!}
+          setEscenas={contexto?.setEscenas!}
+          setNpc={setNpc}
+          setCargando={setCargando}
+          cargando={cargando}
+          npc={npc}
+        />
+      </div>
+    </div>
   );
 };
 
