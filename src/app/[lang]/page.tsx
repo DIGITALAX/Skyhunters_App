@@ -1,11 +1,8 @@
 import Entry from "../components/Common/modules/Entry";
+import { tParams } from "./[...notFound]/page";
 import { getDictionary } from "./dictionaries";
 
-export default async function IndexPage({
-  params,
-}: {
-  params: { lang: string };
-}) {
+export default async function IndexPage({ params }: { params: tParams }) {
   const { lang } = await params;
   const dict = await (getDictionary as (locale: any) => Promise<any>)(lang);
   return <Entry dict={dict} lang={lang} />;

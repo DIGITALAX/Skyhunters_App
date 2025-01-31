@@ -9,7 +9,7 @@ const Piscinas: FunctionComponent<CambioElementoProps> = ({
   return (
     <div className="relative w-full h-full items-center flex flex-col gap-20 justify-between">
       <div className="relative font-vcr text-5xl text-white text-center">
-        {dict.Home.Piscinas}
+        {dict?.Home.Piscinas}
       </div>
       <div className="relative w-full h-fit flex items-start justify-between flex flex-wrap gap-5 overflow-y-scroll">
         {!piscinasCargando

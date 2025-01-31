@@ -58,7 +58,7 @@ const Chat: FunctionComponent<CambioElementoProps> = ({
             onChange={(e) => setPrompt(e.target.value)}
             className="font-bit text-white text-xs focus:outline-none relative w-full h-full rounded-md bg-ligero"
             value={prompt}
-            placeholder={dict.Home.placeholder}
+            placeholder={dict?.Home.placeholder}
             onKeyDown={(e) => {
               if (e.key == "Enter" && prompt?.trim() !== "") {
                 setMensajes([

@@ -75,7 +75,7 @@ const Bar: FunctionComponent<BarProps> = ({
               key={indice}
               className="relative w-fit h-fit flex flex-row gap-3 items-center justify-center cursor-pointer hover:opacity-70"
               onClick={() => setPantalla(elemento.pantalla)}
-              title={dict.Home[elemento.pantalla]}
+              title={dict?.Home[elemento.pantalla]}
             >
               <div
                 className={`relative flex w-6 h-6 rounded-md bg-ligero border ${
@@ -96,7 +96,7 @@ const Bar: FunctionComponent<BarProps> = ({
                 <div   className={`relative text-xs font-bit w-fit h-fit flex items-center justify-center text-left hover:text-white ${
                   pantalla == elemento.pantalla ? "text-white" : "text-ligero"
                 }`}>
-                  {dict.Home[elemento.pantalla]}
+                  {dict?.Home[elemento.pantalla]}
                 </div>
               )}
             </div>
@@ -107,7 +107,7 @@ const Bar: FunctionComponent<BarProps> = ({
         <div
           className="relative w-fit hover:opacity-70 flex-row gap-3 h-fit flex items-center justify-center cursor-pointer"
           onClick={() => setPantalla(Pantalla.Cuenta)}
-          title={dict.Home.Cuenta}
+          title={dict?.Home.Cuenta}
         >
           <div
             className={`relative flex w-6 h-6 rounded-md bg-ligero border ${
@@ -130,7 +130,7 @@ const Bar: FunctionComponent<BarProps> = ({
                 pantalla == Pantalla.Cuenta ? "text-white" : "text-ligero"
               }`}
             >
-              {dict.Home.Cuenta}
+              {dict?.Home.Cuenta}
             </div>
           )}
         </div>
