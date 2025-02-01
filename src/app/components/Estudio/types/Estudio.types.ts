@@ -93,7 +93,6 @@ export interface Escena {
   }[];
   profundidad: Articulo[];
   sillas: Seat[];
-  interactivos: Interactivo[];
   fondo: {
     etiqueta: string;
     uri: string;
@@ -112,26 +111,6 @@ export interface Articulo {
   image: Phaser.GameObjects.Image;
   uri: string;
   etiqueta: string;
-  sitio: {
-    x: number;
-    y: number;
-  };
-  escala: {
-    x: number;
-    y: number;
-  };
-  talla: {
-    x: number;
-    y: number;
-  };
-  profundidad?: number;
-}
-
-export interface Interactivo {
-  image: Phaser.GameObjects.Image;
-  uri: string;
-  etiqueta: string;
-  disenadores: string[];
   sitio: {
     x: number;
     y: number;

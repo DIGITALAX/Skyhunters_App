@@ -91,9 +91,8 @@ export default class NPCEnginePhaser extends Scene {
       this.escena?.objetos?.forEach((obj) => {
         this.load.image(obj.etiqueta, `${INFURA_GATEWAY}/ipfs/${obj.uri}`);
       });
-      this.escena?.interactivos?.forEach((obj) => {
-        this.load.image(obj.etiqueta, `${INFURA_GATEWAY}/ipfs/${obj.uri}`);
-      });
+
+      
       this.escena?.sillas?.forEach((obj) => {
         this.load.image(obj.etiqueta, `${INFURA_GATEWAY}/ipfs/${obj.uri}`);
       });
@@ -201,31 +200,6 @@ export default class NPCEnginePhaser extends Scene {
         profundidad.push({
           ...obj,
           image: item,
-        });
-      });
-
-      this.escena.interactivos?.forEach((obj) => {
-        const interactivo = this.physics.add
-          .image(obj.sitio.x, obj.sitio.y, obj.etiqueta)
-          .setOrigin(0.5, 0.5)
-          .setSize(obj.talla.x, obj.talla.y)
-          .setScale(obj.escala.x, obj.escala.y)
-          .setDisplaySize(obj.talla.x, obj.talla.y)
-          .setDepth(obj.sitio.y);
-        interactivo.setInteractive();
-        interactivo.on("pointerover", () => {
-          this.game.canvas.style.cursor = "pointer";
-        });
-        interactivo.on("pointerout", () => {
-          this.game.canvas.style.cursor = "default";
-        });
-        this.tweens.add({
-          targets: interactivo,
-          y: interactivo.y + 20,
-          yoyo: true,
-          repeat: -1,
-          duration: 1000,
-          ease: "Sine.easeInOut",
         });
       });
 
