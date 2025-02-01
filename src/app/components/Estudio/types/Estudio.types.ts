@@ -136,3 +136,9 @@ export interface Objeto {
 export interface PhaserGameElement extends HTMLElement {
   game: Phaser.Game;
 }
+
+export type CuentaProps = {
+  dict: any;
+  escenas: Escena[];
+  etiqueta?: string;
+};

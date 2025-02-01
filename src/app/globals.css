@@ -3,21 +3,32 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: "Bitblox";
-    src: url("/fonts/Bitblox.otf");
+  font-family: "Bitblox";
+  src: url("/fonts/Bitblox.otf");
 }
 
 @font-face {
-    font-family: "Vcr";
-    src: url("/fonts/Vcr.ttf");
+  font-family: "Vcr";
+  src: url("/fonts/Vcr.ttf");
 }
 
 @font-face {
-    font-family: "Manaspace";
-    src: url("/fonts/Manaspace.ttf");
+  font-family: "Manaspace";
+  src: url("/fonts/Manaspace.ttf");
+}
+
+@font-face {
+  font-family: "Abaddon";
+  font-weight: 400;
+  src: url("/fonts/abaddon.ttf");
+}
+
+@font-face {
+  font-family: "Consolas";
+  font-weight: 400;
+  src: url("/fonts/Consolas.ttf");
 }
 
 html {
- background-color: #2B7FD5;
+  background-color: #2b7fd5;
 }
-

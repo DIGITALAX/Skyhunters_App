@@ -20,6 +20,8 @@ export default {
         vcr: "Vcr",
         bit: "Bitblox",
         mana: "Manaspace",
+        abad: "Abaddon",
+        con: "Consolas",
       },
     },
   },

@@ -7,7 +7,10 @@
     "Chat": "Chat",
     "make": "Make Money & Make Goods",
     "Piscinas": "Pools",
-    "placeholder": "Know what you want to make or earn?"
+    "placeholder": "Know what you want to make or earn?",
+    "select": "select",
+    "player": "player",
+    "scene": "scene"
   },
   "404": {
     "nada": "Error 404: This page has been hijacked by rogue NPCs. We are negotiating it's liberation."

@@ -7,7 +7,10 @@
     "Chat": "Chat",
     "make": "Ganar Dinero & Producir Bienes",
     "Piscinas": "Piscinas",
-    "placeholder": "¿Sabes lo que quieres crear o ganar?"
+    "placeholder": "¿Sabes lo que quieres crear o ganar?",
+    "select": "seleccionar",
+    "player": "jugador",
+    "scene": "escena"
   },
   "404": {
     "nada": "Error 404: La página ha sido secuestrada por NPCs rebeldes. Estamos negociando su liberación."
