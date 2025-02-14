@@ -21,7 +21,8 @@ export default {
         ama: "#FFFCBD",
         noche: "#96A9B6",
         brillo: "#0000E1",
-        masa: "#06B4D1"
+        masa: "#06B4D1",
+        naranja: "#FBAB39"
       },
       fontFamily: {
         vcr: "Vcr",

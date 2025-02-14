@@ -42,3 +42,4 @@ export enum Pantalla {
 export type CambioElementoProps = {
   dict: any;
 };
+

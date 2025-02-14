@@ -35,9 +35,11 @@ const Juego = ({
     <>
       <div
         ref={gameRef as any}
-        className={`relative w-full h-full flex items-start justify-start ${
-          cargando && "animate-pulse"
+        className={`relative w-full rounded-md h-full flex items-start justify-start ${
+          (cargando || escenas?.length < 1 || !escenas) &&
+          "animate-pulse bg-black"
         }`}
+        // style={{ width: "100%", height: "100%" }}
       />
     </>
   );

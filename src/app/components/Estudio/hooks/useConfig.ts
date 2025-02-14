@@ -27,8 +27,9 @@ const useConfig = (
       if (typeof window !== "undefined" && gameRef.current && newSocket?.OPEN) {
         const config: Phaser.Types.Core.GameConfig = {
           type: Phaser.AUTO,
-          width: gameRef.current?.clientWidth,
-          height: gameRef.current?.clientHeight,
+          width: gameRef.current?.offsetWidth,
+          height: gameRef.current?.offsetHeight,
+
           physics: {
             default: "arcade",
             arcade: {

@@ -22,7 +22,7 @@ const RightBar: FunctionComponent<RightBarProps> = ({
       <div className="relative w-fit h-fit flex items-center justify-center flex-col gap-2">
         <div
           className={`relative w-6 h-5 flex items-center justify-center cursor-pointer ${
-            !abrirBar && "rotate-180"
+            abrirBar && "rotate-180"
           }`}
           onClick={() => setAbrirBar(!abrirBar)}
         >
