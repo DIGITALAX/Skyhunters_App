@@ -1,7 +1,7 @@
 {
   "Home": {
     "Estudio": "Studio",
-    "Crear": "Make",
+    "Equipo": "Gear",
     "Agentes": "Agents",
     "Cuenta": "Account",
     "Chat": "Chat",
@@ -10,7 +10,12 @@
     "placeholder": "Know what you want to make or earn?",
     "select": "select",
     "player": "player",
-    "scene": "scene"
+    "scene": "scene",
+    "atajos": "Shortcuts",
+    "spectate": "Spectate the NPC Studio",
+    "coinop": "Create IRL Fashion",
+    "tripleA": "Remix TripleA NFTs",
+    "airdrop": "Hunt Airdrops"
   },
   "404": {
     "nada": "Error 404: This page has been hijacked by rogue NPCs. We are negotiating it's liberation."

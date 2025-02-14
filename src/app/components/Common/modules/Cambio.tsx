@@ -1,6 +1,6 @@
 import { FunctionComponent, JSX } from "react";
 import { CambioProps, Pantalla } from "../types/common.types";
-import Crear from "../../Crear/modules/Crear";
+import Equipo from "../../Equipo/modules/Equipo";
 import Estudio from "../../Estudio/modules/Estudio";
 import Chat from "../../Chat/modules/Chat";
 import Agentes from "../../Agentes/modules/Agentes";
@@ -12,8 +12,8 @@ const Cambio: FunctionComponent<CambioProps> = ({
   dict,
 }): JSX.Element => {
   switch (pantalla) {
-    case Pantalla.Crear:
-      return <Crear dict={dict} />;
+    case Pantalla.Equipo:
+      return <Equipo dict={dict} />;
 
     case Pantalla.Cuenta:
       return <Cuenta dict={dict} />;

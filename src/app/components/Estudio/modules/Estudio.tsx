@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import useEstudio from "../hooks/useEstudio";
 import { ModalContext } from "@/app/providers";
 import Image from "next/legacy/image";
-import { INFURA_GATEWAY } from "@/lib/constants";
+import { INFURA_GATEWAY } from "@/app/lib/constants";
 import { Escena, Sprite } from "../types/Estudio.types";
 import Cuenta from "./Cuenta";
 const Juego = dynamic(() => import("../modules/Juego"), {

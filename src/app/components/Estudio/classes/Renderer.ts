@@ -1,7 +1,7 @@
 import { Scene } from "phaser";
 import RandomWalkerNPC from "./RandomWalkNPC";
 import { Articulo, Escena, Estado, Seat } from "../types/Estudio.types";
-import { INFURA_GATEWAY } from "@/lib/constants";
+import { INFURA_GATEWAY } from "@/app/lib/constants";
 
 export default class NPCEnginePhaser extends Scene {
   private frameCount!: number;

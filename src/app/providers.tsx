@@ -11,6 +11,7 @@ import {
 } from "@lens-protocol/storage-node-client";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 import { Escena } from "./components/Estudio/types/Estudio.types";
+import { LensConnected } from "./components/Common/types/common.types";
 
 export const config = createConfig(
   getDefaultConfig({
@@ -45,6 +46,8 @@ export const ModalContext = createContext<
       setEscenas: (e: SetStateAction<Escena[]>) => void;
       escena: undefined | string;
       setEscena: (e: SetStateAction<undefined | string>) => void;
+      lensConectado: LensConnected | undefined;
+      setLensConectado: (e: SetStateAction<LensConnected | undefined>) => void;
     }
   | undefined
 >(undefined);
@@ -54,6 +57,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   const [clienteLens, setClienteLens] = useState<PublicClient | undefined>();
   const clienteAlmacenamiento = StorageClient.create(storageTestnet);
   const [escenas, setEscenas] = useState<Escena[]>([]);
+  const [lensConectado, setLensConectado] = useState<LensConnected>();
 
   useEffect(() => {
     if (!clienteLens) {
@@ -82,6 +86,8 @@ export default function Providers({ children }: { children: React.ReactNode }) {
               escenas,
               setEscenas,
               setEscena,
+              lensConectado,
+              setLensConectado,
             }}
           >
             {children}

@@ -3,11 +3,14 @@ import { Pantalla } from "../types/common.types";
 
 const useBar = () => {
   const [pantalla, setPantalla] = useState<Pantalla>(Pantalla.Chat);
-  const [abrirBar, setAbrirBar] = useState<boolean>(false);
+  const [abrirBarIzquierdo, setAbrirBarIzquierdo] = useState<boolean>(false);
+  const [abrirBarDerecho, setAbrirBarDerecho] = useState<boolean>(false);
 
   return {
-    abrirBar,
-    setAbrirBar,
+    abrirBarIzquierdo,
+    setAbrirBarIzquierdo,
+    abrirBarDerecho,
+    setAbrirBarDerecho,
     pantalla,
     setPantalla,
   };

@@ -15,6 +15,13 @@ export default {
         nubes: "#7f7f7f",
         cielo: "#2B7FD5",
         blanco: "#E7F3F6",
+        oscuro: "#000023",
+        rosa: "#DE5689",
+        amarillo: "#F5EB31",
+        ama: "#FFFCBD",
+        noche: "#96A9B6",
+        brillo: "#0000E1",
+        masa: "#06B4D1"
       },
       fontFamily: {
         vcr: "Vcr",
@@ -22,6 +29,9 @@ export default {
         mana: "Manaspace",
         abad: "Abaddon",
         con: "Consolas",
+        arc: "Arcadia",
+        nerdS: "Nerd Semi",
+        nerdC: "Nerd Con",
       },
     },
   },

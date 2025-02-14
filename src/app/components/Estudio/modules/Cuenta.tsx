@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import Image from "next/legacy/image";
-import { INFURA_GATEWAY } from "@/lib/constants";
+import { INFURA_GATEWAY } from "@/app/lib/constants";
 import { GiWorld } from "react-icons/gi";
 import descripcionRegex from "@/app/lib/helpers/descripcionRegex";
 import { CuentaProps, Sprite } from "../types/Estudio.types";

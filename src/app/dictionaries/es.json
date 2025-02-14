@@ -1,7 +1,7 @@
 {
   "Home": {
     "Estudio": "Estudio",
-    "Crear": "Crear",
+    "Equipo": "Equipo",
     "Agentes": "Agentes",
     "Cuenta": "Cuenta",
     "Chat": "Chat",
@@ -10,7 +10,12 @@
     "placeholder": "¿Sabes lo que quieres crear o ganar?",
     "select": "seleccionar",
     "player": "jugador",
-    "scene": "escena"
+    "scene": "escena",
+    "atajos": "Atajos",
+    "spectate": "Especta al Estudio NPC",
+    "coinop": "Crea Moda IRL",
+    "tripleA": "Remezcla Los NFTs de TripleA",
+    "airdrop": "Caza Airdrops"
   },
   "404": {
     "nada": "Error 404: La página ha sido secuestrada por NPCs rebeldes. Estamos negociando su liberación."

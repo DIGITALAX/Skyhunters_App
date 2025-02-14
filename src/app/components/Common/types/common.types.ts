@@ -7,13 +7,22 @@ export interface LensConnected {
   sessionClient?: SessionClient;
 }
 
-export type BarProps = {
+export type RightBarProps = {
+  setAbrirBar: (e: SetStateAction<boolean>) => void;
+  router: AppRouterInstance;
+  abrirBar: boolean;
+  dict: any;
+  lensConectado: LensConnected | undefined;
+};
+
+export type LeftBarProps = {
   setAbrirBar: (e: SetStateAction<boolean>) => void;
   router: AppRouterInstance;
   abrirBar: boolean;
   setPantalla: (e: SetStateAction<Pantalla>) => void;
   pantalla: Pantalla;
   dict: any;
+  lensConectado: LensConnected | undefined;
 };
 
 export type CambioProps = {
@@ -23,11 +32,11 @@ export type CambioProps = {
 
 export enum Pantalla {
   Estudio = "Estudio",
-  Crear = "Crear",
+  Equipo = "Equipo",
   Agentes = "Agentes",
   Cuenta = "Cuenta",
   Chat = "Chat",
-  Piscinas = "Piscinas"
+  Piscinas = "Piscinas",
 }
 
 export type CambioElementoProps = {
