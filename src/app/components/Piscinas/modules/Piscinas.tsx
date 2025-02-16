@@ -19,9 +19,12 @@ const Piscinas: FunctionComponent<CambioElementoProps> = ({
         <br />
         WHAT ABOUT THE SPECIFIC LOGIC OF WHAT THE POOLS ARE DOING?
       </div>
-      <div className="relative w-full h-full flex overflow-y-scroll" id="scroll">
-        <div className="relative w-full h-fit flex items-start justify-between flex flex-wrap gap-20 overflow-y-scroll pb-10">
-          {!piscinasCargando
+      <div
+        className="relative w-full h-full flex overflow-y-scroll"
+        id="scroll"
+      >
+        <div className="relative w-full h-fit flex items-start justify-center flex flex-wrap gap-10 md:gap-20 overflow-y-scroll pb-10">
+          {piscinasCargando
             ? PEGATINAS?.sort(() => Math.random() - 0.5).map(
                 (imagen, indice) => {
                   return (
@@ -29,7 +32,7 @@ const Piscinas: FunctionComponent<CambioElementoProps> = ({
                       key={indice}
                       className="relative flex w-fit h-fit animate-pulse"
                     >
-                      <div className="relative w-72 h-72 flex">
+                      <div className="relative w-20 sm:w-40 lg:w-72 h-20 lg:h-52 flex">
                         <Image
                           layout="fill"
                           objectFit="contain"
@@ -45,8 +48,21 @@ const Piscinas: FunctionComponent<CambioElementoProps> = ({
                 return (
                   <div
                     key={indice}
-                    className="relative flex w-72 h-72 rounded-md border border-ligero bg-gris"
-                  ></div>
+                    className="relative flex w-full sm:w-40 lg:w-72 h-40 lg:h-52 flex-col gap-1 items-center justify-center text-center"
+                  >
+                    <div className="relative w-full h-full flex hover:opacity-70 cursor-pointer">
+                      <Image
+                        draggable={false}
+                        layout="fill"
+                        objectFit="contain"
+                        src={`${INFURA_GATEWAY}/ipfs/${piscina.cover}`}
+                        priority
+                      />
+                    </div>
+                    <div className="relative w-fit h-fit flex font-nerdS text-white">
+                      {piscina.name}
+                    </div>
+                  </div>
                 );
               })}
         </div>

@@ -86,3 +86,39 @@ export const AGENTES: string[] = [
   "QmRkowMuSRrTtQprPgxQ9ZfyvShTQbZTyDAj5LDB3Z4kuB",
   "QmSGS2DB6wgKNL9kiREW1wSRLwzzAjD2u4rW1Fn9evoK9S",
 ];
+
+export const PISCINAS: { cover: string; name: string }[] = [
+  {
+    name: "Mona",
+    cover: "QmX3D6XTCeRgxPNUTWZXAP7jyqMhjGrMZPD8oMwpLnrzTC",
+  },
+
+  {
+    name: "Governance",
+    cover: "QmbErS3UgtwpZKhHyCmXjJUYwoz5bi4vYcFvTLC43Y8Rkb",
+  },
+  {
+    name: "Spectator",
+    cover: "QmUADUGjpTmWNVZkEuSbx21SbW32PSeuDW3cdvqbqB7M4Y",
+  },
+  {
+    name: "Lens",
+    cover: "QmfCTp6s3LdfV8bzuuU2qYPv13pb8F6U12vENarvBdBYkA",
+  },
+  {
+    name: "Agent Activity",
+    cover: "QmQznz3gKvi27nGDNVFEHn5gFC5HSpJcKNXqe1R8HGkoQf",
+  },
+  {
+    name: "Dev Tres",
+    cover: "QmZQkrm3DN7DonkHpknHwaEsyp72Lf77quFGZVPtLenoPw",
+  },
+  {
+    name: "Venice",
+    cover: "QmSn7sN9cKZi2KhRDMpfc262nWp2FDYA1C8dp75iiECS79",
+  },
+  {
+    name: "زن زندگی آزادی",
+    cover: "QmSnZLTHA3o3Gt6AY6LpcziahSCA81dGGeKV5QfJqzF5Pt",
+  },
+];

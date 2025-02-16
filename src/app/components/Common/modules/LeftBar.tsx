@@ -17,7 +17,7 @@ const LeftBar: FunctionComponent<LeftBarProps> = ({
   return (
     <div
       className={`absolute bg-black top-0 z-10 left-0 h-full flex justify-between items-center flex-col py-4 ${
-        abrirBar ? "w-fit pl-2 pr-3" : "w-10 px-2"
+        abrirBar ? "w-[calc(100vw-2.5rem)] sm:w-fit pl-2 pr-3" : "w-10 px-2"
       }`}
     >
       <div className="absolute top-0 left-0 w-full h-full flex">
@@ -86,7 +86,10 @@ const LeftBar: FunctionComponent<LeftBarProps> = ({
             <div
               key={indice}
               className="relative w-fit h-fit flex flex-row gap-3 items-center justify-center cursor-pointer hover:opacity-70"
-              onClick={() => setPantalla(elemento.pantalla)}
+              onClick={() => {
+                setPantalla(elemento.pantalla);
+                setAbrirBar(false);
+              }}
               title={dict?.Home[elemento.pantalla]}
             >
               <div className="relative w-fit h-fit fled">

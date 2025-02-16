@@ -85,7 +85,7 @@ const Chat: FunctionComponent<CambioElementoProps> = ({
                   title={item.titulo}
                   onClick={() => handleEliza(item.tipo)}
                 >
-                  <div className="relative w-28 h-28 flex">
+                  <div className="relative w-10 h-10 sm:w-16 sm:h-16 md:w-28 md:h-28 flex">
                     <Image
                       draggable={false}
                       layout="fill"
@@ -108,7 +108,7 @@ const Chat: FunctionComponent<CambioElementoProps> = ({
       >
         <div
           className={`relative flex flex-row gap-2 items-start justify-start rounded-md bg-black h-10 px-2 py-1 ${
-            mensajes?.length > 0 || elizaLoading ? "w-full" : "w-1/2"
+            mensajes?.length > 0 || elizaLoading ? "w-full" : "w-full sm:w-3/4 lg:w-1/2"
           }`}
         >
           <input

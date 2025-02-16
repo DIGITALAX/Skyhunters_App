@@ -35,12 +35,7 @@ export default function Entry({ dict, lang }: { dict: any; lang: string }) {
           />
         </div>
       </div>
-      <div className="relative w-full h-full flex p-8">
-        <div className="relative w-full h-full flex items-start justify-center pt-5 px-6 bg-oscuro border border-brillo rounded-md">
-          <Cambio dict={dict} pantalla={pantalla} />
-        </div>
-      </div>
-      <div className="relative w-fit h-full flex">
+      <div className="relative w-fit h-full flex sm:hidden">
         <div className="relative w-10 h-full flex">
           <RightBar
             router={router}
@@ -48,6 +43,24 @@ export default function Entry({ dict, lang }: { dict: any; lang: string }) {
             abrirBar={abrirBarDerecho}
             dict={dict}
             lensConectado={contexto?.lensConectado}
+            abrirBarIzquierdo={abrirBarIzquierdo}
+          />
+        </div>
+      </div>
+      <div className="relative w-full h-full flex p-2 sm:p-4 md:p-8">
+        <div className="relative w-full h-full flex items-start justify-center pt-5 pb-3 px-1 sm:px-6 bg-oscuro border border-brillo rounded-md">
+          <Cambio dict={dict} pantalla={pantalla} />
+        </div>
+      </div>
+      <div className="relative w-fit h-full hidden sm:flex">
+        <div className="relative w-10 h-full flex">
+          <RightBar
+            router={router}
+            setAbrirBar={setAbrirBarDerecho}
+            abrirBar={abrirBarDerecho}
+            dict={dict}
+            lensConectado={contexto?.lensConectado}
+            abrirBarIzquierdo={false}
           />
         </div>
       </div>

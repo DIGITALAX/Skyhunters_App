@@ -17,9 +17,11 @@ const Agentes: FunctionComponent<CambioElementoProps> = ({
         className="relative w-full h-full flex overflow-y-scroll"
         id="scroll"
       >
-        <div className={`relative w-full h-fit flex items-start justify-center flex flex-wrap overflow-y-scroll pb-10 ${
-          agentesCargando ? "gap-20" : "gap-6"
-        }`}>
+        <div
+          className={`relative w-full h-fit flex items-start justify-center flex flex-wrap overflow-y-scroll pb-10 ${
+            agentesCargando ? "gap-20" : "gap-6"
+          }`}
+        >
           {agentesCargando
             ? PEGATINAS?.sort(() => Math.random() - 0.5).map(
                 (imagen, indice) => {
@@ -28,7 +30,7 @@ const Agentes: FunctionComponent<CambioElementoProps> = ({
                       key={indice}
                       className="relative flex w-fit h-fit animate-pulse"
                     >
-                      <div className="relative w-72 h-72 flex">
+                      <div className="relative w-20 sm:w-40 lg:w-72 h-20 lg:h-52 flex">
                         <Image
                           layout="fill"
                           objectFit="contain"
@@ -46,7 +48,7 @@ const Agentes: FunctionComponent<CambioElementoProps> = ({
                     key={indice}
                     className="relative flex w-fit h-fit cursor-pointer hover:opacity-70"
                   >
-                    <div className="relative w-60 h-60 flex">
+                    <div className="relative w-28 h-28 md:w-44 md:h-44 lg:w-60 lg:h-60 flex">
                       <Image
                         draggable={false}
                         layout="fill"

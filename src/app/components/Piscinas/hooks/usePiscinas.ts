@@ -1,7 +1,9 @@
+import { PISCINAS } from "@/app/lib/constants";
 import { useEffect, useState } from "react";
 
 const usePiscinas = () => {
-  const [piscinas, setPiscinas] = useState<[]>([]);
+  const [piscinas, setPiscinas] =
+    useState<{ cover: string; name: string }[]>(PISCINAS);
   const [piscinasCargando, setPiscinasCargando] = useState<boolean>(false);
 
   const handlePiscinas = async () => {

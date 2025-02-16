@@ -13,6 +13,7 @@ export type RightBarProps = {
   abrirBar: boolean;
   dict: any;
   lensConectado: LensConnected | undefined;
+  abrirBarIzquierdo: boolean
 };
 
 export type LeftBarProps = {

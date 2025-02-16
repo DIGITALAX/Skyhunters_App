@@ -1,6 +1,6 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent } from "react";
 import { JSX } from "react/jsx-runtime";
-import { RightBarProps,  } from "../types/common.types";
+import { RightBarProps } from "../types/common.types";
 import Image from "next/legacy/image";
 import { INFURA_GATEWAY } from "@/app/lib/constants";
 import JuegoDeVida from "./JuegoDeVida";
@@ -11,18 +11,20 @@ const RightBar: FunctionComponent<RightBarProps> = ({
   abrirBar,
   dict,
   lensConectado,
+  abrirBarIzquierdo,
 }): JSX.Element => {
-  const [bg, setBg] = useState<number>(0);
   return (
     <div
       className={`absolute bg-black top-0 z-10 h-full flex justify-between items-center flex-col py-4 gap-4 ${
-        abrirBar ? "w-fit pl-2 pr-3 -left-[6.9rem]" : "left-0 w-10 px-2"
-      }`}
+        abrirBar
+          ? "w-[calc(100vw-2.5rem)] sm:w-fit pl-2 pr-3 sm:-left-[6.9rem]"
+          : "left-0 w-10 px-2"
+      } ${abrirBarIzquierdo && "left-[calc((100vw-2.5rem)-100%)]"}`}
     >
       <div className="relative w-fit h-fit flex items-center justify-center flex-col gap-2">
         <div
           className={`relative w-6 h-5 flex items-center justify-center cursor-pointer ${
-            abrirBar && "rotate-180"
+            abrirBar ? "rotate-0 sm:rotate-180" : "rotate-180 sm:rotate-0"
           }`}
           onClick={() => setAbrirBar(!abrirBar)}
         >
@@ -35,9 +37,9 @@ const RightBar: FunctionComponent<RightBarProps> = ({
       </div>
       {abrirBar && (
         <div
-          className={`relative w-full h-full flex justify-between flex-col gap-4 items-start`}
+          className={`relative w-full h-full flex justify-between flex-col gap-4 items-center`}
         >
-          <div className="relative w-full h-fit flex">
+          <div className="relative w-fit h-fit flex">
             <div className="relative w-32 h-20 flex border border-masa rounded-lg">
               <JuegoDeVida />
             </div>

@@ -11,7 +11,7 @@ const Equipo: FunctionComponent<CambioElementoProps> = ({
   return (
     <div className="relative w-full h-full items-center flex flex-col gap-20 justify-center font-nerdC">
       <div className="relative w-full h-full flex flex-col items-center justify-center gap-12">
-        <div className="relative text-lg uppercase w-[70vw] h-fit flex text-white text-center items-center justify-center overflow-x-scroll gap-20">
+        <div className="relative text-lg uppercase w-[calc(100vw-7rem)] sm:w-[70vw] h-fit flex text-white text-center items-center justify-center overflow-x-scroll gap-20">
           {PEGATINAS?.sort(() => Math.random() - 0.5).map(
             (pegatina, indice) => {
               return (
@@ -21,7 +21,7 @@ const Equipo: FunctionComponent<CambioElementoProps> = ({
                     modulosCargando && "animate-pulse"
                   }`}
                 >
-                  <div className="relative w-32 h-32 flex">
+                  <div className="relative w-16 h-16 md:w-32 md:h-32 flex">
                     <Image
                       layout="fill"
                       objectFit="contain"
@@ -37,7 +37,7 @@ const Equipo: FunctionComponent<CambioElementoProps> = ({
         <div className="relative text-lg uppercase w-full h-fit flex text-white text-center items-center justify-center">
           {dict.Home.make}
         </div>
-        <div className="relative text-lg uppercase w-[70vw] h-fit flex text-white text-center items-center justify-center overflow-x-scroll gap-20">
+        <div className="relative text-lg uppercase w-[calc(100vw-7rem)] sm:w-[70vw] h-fit flex text-white text-center items-center justify-center overflow-x-scroll gap-20">
           {PEGATINAS?.sort(() => Math.random() - 0.5).map(
             (pegatina, indice) => {
               return (
@@ -47,7 +47,7 @@ const Equipo: FunctionComponent<CambioElementoProps> = ({
                     modulosCargando && "animate-pulse"
                   }`}
                 >
-                  <div className="relative w-32 h-32 flex">
+                  <div className="relative w-16 h-16 md:w-32 md:h-32 flex">
                     <Image
                       layout="fill"
                       objectFit="contain"
@@ -78,7 +78,7 @@ const Equipo: FunctionComponent<CambioElementoProps> = ({
                       key={indice}
                       className="relative flex w-fit h-fit animate-pulse"
                     >
-                      <div className="relative w-72 h-72 flex">
+                      <div className="relative w-20 sm:w-40 lg:w-72 h-20 lg:h-52 flex">
                         <Image
                           layout="fill"
                           objectFit="contain"
