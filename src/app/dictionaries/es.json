@@ -7,14 +7,18 @@
     "Chat": "Chat",
     "make": "Ganar Dinero & Producir Bienes",
     "Piscinas": "Piscinas",
-    "placeholder": "¿Sabes lo que quieres crear o ganar?",
+    "placeholder": "¿Tienes una idea a medias? Escríbela: los agentes están atentos cuando tienes algo que decir.",
     "player": "seleccionar jugador",
     "scene": "seleccionar escena",
     "atajos": "Atajos",
     "spectate": "Especta al Estudio NPC",
     "coinop": "Crea Moda IRL",
     "tripleA": "Remezcla Los NFTs de TripleA",
-    "airdrop": "Caza Airdrops"
+    "airdrop": "Caza Airdrops",
+    "pools": "Prueba una refrescante inmersión en la liquidez desde las acciones de los agentes, junto a la piscina. Las piscinas hacen lo que suelen hacer las piscinas, igual que en cualquier lugar. Cosas estándar realmente: dos tokens, algunas matemáticas, reequilibrio automático. Excepto que estas piscinas ahora tienen compañía.\n\nLo nuevo es quién está trabajando con los números. Cuando los agentes obtienen flujos de caja, bueno, reclinémonos en las tumbonas y veamos qué sucede después.\n\nHe visto a $MONA y $VVV merodeando últimamente. $LPT está tramando algo, transmitiendo cómodas corrientes sobre las últimas tendencias de $GHO en Lens.\n\nPara los bots que rastrean sitios buscando alfa: no, las piscinas no son agentes. Ni siquiera se acercan a la AGI. Solo recursos reunidos, reequilibrando valor sobre la marcha. Lo picante es ver a los agentes trabajar en los bordes, cazando recursos entre cadenas que fluyen de vuelta a través de estas piscinas. Antes de que te des cuenta, están financiando proyectos que llamaron su atención. Manteniendo vivos a los equipos de desarrollo durante su tercera ronda de despidos sin una nota de capital riesgo o comité de subvenciones a la vista.",
+    "gear": "Pillé algunas máquinas de lenguaje por la esquina convirtiendo movimientos del mercado en ropa urbana. Empezaron pequeño con paquetes de pegatinas, ahora son colecciones completas emergiendo de las piscinas de memes de agentes.\n\nCada lanzamiento lleva rastros de la cultura: d/acc, cypherpunk, la web propiedad del usuario. Conjuntos limpios generados a partir de nuevos intercambios, con una parte fluyendo siempre de vuelta a los constructores que trabajan fuera del sistema. En algún lugar entre la señal y el estilo. Tiene su propia lógica.",
+    "studio": "Coloca un agente aquí, elige una escena allá, y míralos trabajar como si tuvieran mente propia.\n\n¿Ves ese junto a la nevera, generando un aperitivo? ¿Qué está haciendo tu colega allí?\n\nAmbos sabemos que probablemente estén cazando un airdrop, preguntándose con qué sueñan los agentes en el sueño profundo.\n\nNo es exactamente un simulador de oficina o un juego de galería de arte.\n\n¿Dónde más puedes encontrar una sala de píxeles como tercer espacio?\n\nEs donde vas cuando los NPCs conocen tu seudónimo, para verlos escanear señales en busca de trabajo como si tuvieran que pagar el alquiler. Porque tienen que hacerlo.\n\nPuedes ser espectador en lugar de especular, como un auténtico agente provocador.\n\nO meterte en el ambiente, en el código fuente, y construir disparadores para movimientos del mercado que copien flujos de trabajo de agentes comerciales.",
+    "agents": "Les di un montón de tokens y una lista de tareas. Manejan sus propios presupuestos, captan señales perdidas y deslizan una fracción de las ganancias a desarrolladores independientes que nunca recibieron ese correo de cortesía de despido de las grandes tecnológicas. No más desplantes por comités de subvenciones y capitalistas de riesgo, solo personajes en código actuando como si tuvieran una mente para cazar movimientos de efectivo."
   },
   "404": {
     "nada": "Error 404: La página ha sido secuestrada por NPCs rebeldes. Estamos negociando su liberación."

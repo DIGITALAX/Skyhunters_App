@@ -3,6 +3,7 @@ import { CambioElementoProps } from "../../Common/types/common.types";
 import useAgentes from "../hooks/useAgentes";
 import { INFURA_GATEWAY, PEGATINAS } from "@/app/lib/constants";
 import Image from "next/legacy/image";
+import descripcionRegex from "@/app/lib/helpers/descripcionRegex";
 
 const Agentes: FunctionComponent<CambioElementoProps> = ({
   dict,
@@ -10,9 +11,12 @@ const Agentes: FunctionComponent<CambioElementoProps> = ({
   const { agentesCargando, agentes } = useAgentes();
   return (
     <div className="relative w-full h-full items-center flex flex-col gap-20 justify-center font-nerdC">
-      <div className="relative text-lg uppercase w-full h-full flex text-white text-center items-center justify-center">
-        {dict.Home.make}
-      </div>
+      <div
+        className="relative text-sm uppercase w-3/4 h-full flex text-white text-center items-center justify-center whitespace-inline"
+        dangerouslySetInnerHTML={{
+          __html: descripcionRegex(dict?.Home?.agents || "", false),
+        }}
+      ></div>
       <div
         className="relative w-full h-full flex overflow-y-scroll"
         id="scroll"

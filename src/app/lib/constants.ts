@@ -20,6 +20,7 @@ export const PEGATINAS: string[] = [
   "QmWc9KNXkXxGTCrHqtk81GyL7sWyg2Nx4NKtanSMSvFemf",
   "QmdvBYBHN9g9PCt67khCpbaA32M746vVotbKDy8uwR2mUu",
   "QmYMauZ72n8x8ei6NpyBNRYgqroK4EYyNPCnZYtgtn8Epc",
+  "QmabDDhvZKgezBtT5s1ukce1oxw6Fu6bSGRE6bvsd46WDR",
   "QmbNAaUdAHuhrkAbkH3oNMHSPdEnSEK29ezD5P3iQeLSyX",
   "QmZeznchRymMV6V88DAb928NahC6sp2NgsKgr59huFBdDK",
   "QmPrcx3dSXKU2ALxoc2j8C5VQTjiiCVnLtU69yR8FaB4RU",

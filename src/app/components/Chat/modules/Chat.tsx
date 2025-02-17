@@ -113,7 +113,7 @@ const Chat: FunctionComponent<CambioElementoProps> = ({
         >
           <input
             onChange={(e) => setPrompt(e.target.value)}
-            className="font-nerdS uppercase text-ama focus:outline-none relative w-full h-full rounded-md bg-black placeholder:text-ama"
+            className="font-nerdS text-xs uppercase text-ama focus:outline-none relative w-full h-full rounded-md bg-black placeholder:text-ama"
             value={prompt}
             placeholder={dict?.Home.placeholder}
             onKeyDown={(e) => {

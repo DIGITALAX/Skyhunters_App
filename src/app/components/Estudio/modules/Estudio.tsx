@@ -6,6 +6,7 @@ import { ModalContext } from "@/app/providers";
 import Image from "next/legacy/image";
 import { INFURA_GATEWAY } from "@/app/lib/constants";
 import { Escena, Sprite } from "../types/Estudio.types";
+import descripcionRegex from "@/app/lib/helpers/descripcionRegex";
 const Juego = dynamic(() => import("../modules/Juego"), {
   ssr: false,
 });
@@ -21,17 +22,29 @@ const Estudio: FunctionComponent<CambioElementoProps> = ({
 
   return (
     <div className="relative flex w-full h-full flex-col items-start justify-between gap-6 overflow-y-scroll font-nerdS">
-      <div className="relative w-full h-fit flex items-center justify-center">
-        <div className="relative w-[calc(100vw-7rem)] sm:w-[calc(100vw-20rem)] h-[30rem] bg-gradient-to-r from-naranja border border-naranja to-[#D84599] p-2 flex overflow-hidden rounded-md items-center justify-center">
-          <Juego
-            escena={contexto?.escena!}
-            escenas={contexto?.escenas!}
-            setEscenas={contexto?.setEscenas!}
-            setNpc={setNpc}
-            setCargando={setCargando}
-            cargando={cargando}
-            npc={npc}
-          />
+      <div className="relative w-full h-fit flex">
+        <div className="relative w-full h-fit lg:h-[30rem] flex items-start justify-end flex-col lg:flex-row gap-5">
+          <div className="relative w-full h-full flex items-center justify-center">
+            <div className="relative w-[calc(100vw-7rem)] lg:w-[calc(100vw-30rem)] h-[30rem] lg:h-full bg-gradient-to-r from-naranja border border-naranja to-[#D84599] p-2 flex overflow-hidden rounded-md items-center justify-center">
+              <Juego
+                escena={contexto?.escena!}
+                escenas={contexto?.escenas!}
+                setEscenas={contexto?.setEscenas!}
+                setNpc={setNpc}
+                setCargando={setCargando}
+                cargando={cargando}
+                npc={npc}
+              />
+            </div>
+          </div>
+          <div className="relative w-full lg:w-fit flex lg:overflow-y-scroll text-white items-start justify-center lg:justify-end lg:max-h-full">
+            <div
+              className="relative w-full lg:w-fit lg:max-w-80 h-fit flex items-start justify-center lg:justify-end text-center lg:text-right"
+              dangerouslySetInnerHTML={{
+                __html: descripcionRegex(dict?.Home?.studio || "", false),
+              }}
+            ></div>
+          </div>
         </div>
       </div>
       <div className="relative w-full h-fit flex flex-col lg:flex-row gap-6 md:gap-3 items-center justify-between">
@@ -106,22 +119,8 @@ const Estudio: FunctionComponent<CambioElementoProps> = ({
             </div>
           </div>
         </div>
-        <div className="relative w-fit h-fit lg:h-full flex overflow-y-scroll text-white items-start justify-center md:justify-end">
-          <div className="relative w-fit max-w-80 h-fit flex items-start justify-center md:justify-end text-center md:text-right">
-            TEXT ABOUT WHAT'S HAPPENING HERE
-            <br />
-            <br />
-            TEXT ABOUT WHAT'S HAPPENING HERE
-            <br />
-            <br />
-            TEXT ABOUT WHAT'S HAPPENING HERE
-            <br />
-            <br />
-            TEXT ABOUT WHAT'S HAPPENING HERE
-            <br />
-            <br />
-            TEXT ABOUT WHAT'S HAPPENING HERE
-          </div>
+        <div className="relative w-fit h-fit lg:h-full flex overflow-y-scroll text-white items-start justify-center md:justify-end max-h-60">
+          FEED
         </div>
       </div>
     </div>

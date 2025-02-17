@@ -3,6 +3,7 @@ import { CambioElementoProps } from "../../Common/types/common.types";
 import usePiscinas from "../hooks/usePiscinas";
 import Image from "next/legacy/image";
 import { INFURA_GATEWAY, PEGATINAS } from "@/app/lib/constants";
+import descripcionRegex from "@/app/lib/helpers/descripcionRegex";
 
 const Piscinas: FunctionComponent<CambioElementoProps> = ({
   dict,
@@ -10,15 +11,12 @@ const Piscinas: FunctionComponent<CambioElementoProps> = ({
   const { piscinas, piscinasCargando } = usePiscinas();
   return (
     <div className="relative w-full h-full items-center flex flex-col gap-20 justify-center font-nerdC">
-      <div className="relative text-lg uppercase w-full h-full flex text-white text-center items-center justify-center">
-        SOME BIG AMOUNT OF TEXT GOES HERE DESCRIBING THE POOLS
-        <br />
-        <br />
-        BUT WHAT ABOUT THE POOL PAGES THEMSELVES?
-        <br />
-        <br />
-        WHAT ABOUT THE SPECIFIC LOGIC OF WHAT THE POOLS ARE DOING?
-      </div>
+      <div
+        className="relative text-sm uppercase w-3/4 h-full flex text-white text-center items-center justify-center whitespace-inline"
+        dangerouslySetInnerHTML={{
+          __html: descripcionRegex(dict?.Home?.pools || "", false),
+        }}
+      ></div>
       <div
         className="relative w-full h-full flex overflow-y-scroll"
         id="scroll"

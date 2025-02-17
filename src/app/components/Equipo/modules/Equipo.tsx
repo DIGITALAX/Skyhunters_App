@@ -3,6 +3,7 @@ import { CambioElementoProps } from "../../Common/types/common.types";
 import useEquipo from "../hooks/useEquipo";
 import Image from "next/legacy/image";
 import { INFURA_GATEWAY, PEGATINAS } from "@/app/lib/constants";
+import descripcionRegex from "@/app/lib/helpers/descripcionRegex";
 
 const Equipo: FunctionComponent<CambioElementoProps> = ({
   dict,
@@ -34,8 +35,16 @@ const Equipo: FunctionComponent<CambioElementoProps> = ({
             }
           )}
         </div>
-        <div className="relative text-lg uppercase w-full h-fit flex text-white text-center items-center justify-center">
-          {dict.Home.make}
+        <div className="relative w-full h-fit flex flex-col gap-2 items-center justify-center">
+          <div className="relative text-lg uppercase w-full h-fit flex text-white text-center items-center justify-center">
+            {dict.Home.make}
+          </div>
+          <div
+            className="relative text-sm uppercase w-3/4 h-full flex text-white text-center items-center justify-center whitespace-inline"
+            dangerouslySetInnerHTML={{
+              __html: descripcionRegex(dict?.Home?.gear || "", false),
+            }}
+          ></div>
         </div>
         <div className="relative text-lg uppercase w-[calc(100vw-7rem)] sm:w-[70vw] h-fit flex text-white text-center items-center justify-center overflow-x-scroll gap-20">
           {PEGATINAS?.sort(() => Math.random() - 0.5).map(
