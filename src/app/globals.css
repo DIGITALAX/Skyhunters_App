@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Web";
+  src: url("/fonts/webpixel.otf");
+}
+
+@layer {
+  .font-web {
+    font-family: "Web";
+  }
+}
+
+body {
+  background: white;
+  color: black;
+  font-family: "Web", serif;
+  margin: 8px;
+}
+
+button {
+  cursor: pointer;
+  border-style: "outset";
+  border-color: "#dfdfdf" 
+}
+
+button:disabled {
+  cursor: default;
+}
