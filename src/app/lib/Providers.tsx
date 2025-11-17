@@ -21,15 +21,15 @@ export const AppContext = createContext<AppContextType | undefined>(undefined);
 const config = createConfig(
   getDefaultConfig({
     appName: "Skyhunters",
-    appDescription: "",
+    appDescription: "Autonomous Oracle Markets @ DIGITALAX",
     appUrl: "https://skyhunters.agentmeme.xyz/",
     appIcon: "https://skyhunters.agentmeme.xyz/favicon.ico",
     walletConnectProjectId:
       process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || "",
-    chains: [chains.testnet],
+    chains: [chains.mainnet],
     connectors: [],
     transports: {
-      [currentNetwork.chainId]: http(),
+      [chains.mainnet.id]: http(),
     },
   })
 );

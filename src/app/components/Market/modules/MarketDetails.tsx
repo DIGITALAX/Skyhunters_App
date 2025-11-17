@@ -1,9 +1,11 @@
 import { FunctionComponent, JSX } from "react";
 import { MarketDetailsProps } from "../types/market.types";
 import { formatEther } from "viem";
+import Countdown from "../../Common/modules/Countdown";
 
 const MarketDetails: FunctionComponent<MarketDetailsProps> = ({
   market,
+  dict,
   network,
 }): JSX.Element => {
   const timeUntilEnd = market?.endTime
@@ -17,24 +19,31 @@ const MarketDetails: FunctionComponent<MarketDetailsProps> = ({
     (timeUntilEnd % (1000 * 60 * 60)) / (1000 * 60)
   );
 
+  const now = Date.now() / 1000;
+  const marketEnded = now > parseInt(market.endTime);
+  const proposalWindowEnded =
+    market.proposalWindowEnds && now > parseInt(market.proposalWindowEnds);
+  const hasProposal = !!market.proposal;
+
   return (
     <div className="border-2 border-black bg-white p-3 mb-4">
       <h1 className="text-lg font-bold text-black mb-3">
-        MARKET #{market.marketId}:{" "}
-        {market.metadata?.question || "No question available"}
+        {dict?.market_details_title
+          ?.replace("{id}", market.marketId)
+          ?.replace("{question}", market.metadata?.question || dict?.market_details_no_question)}
       </h1>
 
       <table className="w-full text-xs border-collapse">
         <tbody>
           <tr>
             <td className="border border-black p-1 bg-gray-200 font-bold">
-              CREATOR
+              {dict?.market_details_creator}
             </td>
             <td className="border border-black p-1">
               <a
                 href={`${network.blockExplorer}/address/${market.creator}`}
                 target="_blank"
-                className="text-blue-600 underline"
+                className="text-blue-600 break-all underline"
               >
                 {market.creator}
               </a>
@@ -42,15 +51,51 @@ const MarketDetails: FunctionComponent<MarketDetailsProps> = ({
           </tr>
           <tr>
             <td className="border border-black p-1 bg-gray-200 font-bold">
-              END TIME
+              {dict?.market_details_end_time}
             </td>
             <td className="border border-black p-1">
               {new Date(parseInt(market.endTime) * 1000).toLocaleString()}
             </td>
           </tr>
+          {marketEnded &&
+            !hasProposal &&
+            !market.isFinalized &&
+            !market.isExpired &&
+            !market.isBlacklisted &&
+            !market.isCancelled && (
+              <>
+                <tr>
+                  <td className="border border-black p-1 bg-yellow-200 font-bold">
+                    {dict?.market_details_proposal_ends}
+                  </td>
+                  <td className="border border-black p-1 bg-yellow-50">
+                    {new Date(
+                      parseInt(market.proposalWindowEnds) * 1000
+                    ).toLocaleString()}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="border border-black p-1 bg-yellow-200 font-bold">
+                    {dict?.market_details_proposal_period}
+                  </td>
+                  <td className="border border-black p-1 bg-yellow-50">
+                    {proposalWindowEnded ? (
+                      <span className="font-bold text-red-600">
+                        {dict?.market_details_proposal_period_ended}
+                      </span>
+                    ) : (
+                      <Countdown
+                        endTime={market.proposalWindowEnds}
+                        dict={dict}
+                      />
+                    )}
+                  </td>
+                </tr>
+              </>
+            )}
           <tr>
             <td className="border border-black p-1 bg-gray-200 font-bold">
-              PRICE RANGE
+              {dict?.market_details_price_range}
             </td>
             <td className="border border-black p-1">
               {Number(market.minPrice)} - {Number(market.maxPrice)} (precision:{" "}
@@ -59,88 +104,78 @@ const MarketDetails: FunctionComponent<MarketDetailsProps> = ({
           </tr>
           <tr>
             <td className="border border-black p-1 bg-gray-200 font-bold">
-              URI
+              {dict?.market_details_source}
             </td>
             <td className="border border-black p-1">
-              <a
-                href={market.uri}
-                target="_blank"
-                className="text-blue-600 underline"
-              >
-                {market.uri}
-              </a>
+              {market.metadata?.source || dict?.common_not_available}
             </td>
           </tr>
           <tr>
             <td className="border border-black p-1 bg-gray-200 font-bold">
-              SOURCE
+              {dict?.market_details_rounding}
             </td>
             <td className="border border-black p-1">
-              {market.metadata?.source || "N/A"}
+              {market.metadata?.roundingMethod || dict?.common_not_available}
             </td>
           </tr>
           <tr>
             <td className="border border-black p-1 bg-gray-200 font-bold">
-              ROUNDING METHOD
+              {dict?.market_details_failover}
             </td>
             <td className="border border-black p-1">
-              {market.metadata?.roundingMethod || "N/A"}
+              {market.metadata?.failoverSource || dict?.common_not_available}
             </td>
           </tr>
           <tr>
             <td className="border border-black p-1 bg-gray-200 font-bold">
-              FAILOVER SOURCE
+              {dict?.market_details_total_volume}
             </td>
             <td className="border border-black p-1">
-              {market.metadata?.failoverSource || "N/A"}
+              {formatEther(BigInt(market.totalVolume ?? 0))} MONA
             </td>
           </tr>
           <tr>
             <td className="border border-black p-1 bg-gray-200 font-bold">
-              TOTAL VOLUME
+              {dict?.market_details_market_fees}
             </td>
             <td className="border border-black p-1">
-              {formatEther(BigInt(market.totalVolume))} MONA
+              {formatEther(BigInt(market.marketFees ?? 0))} MONA
             </td>
           </tr>
           <tr>
             <td className="border border-black p-1 bg-gray-200 font-bold">
-              MARKET FEES
+              {dict?.market_details_status}
             </td>
             <td className="border border-black p-1">
-              {formatEther(BigInt(market.marketFees))} MONA
-            </td>
-          </tr>
-          <tr>
-            <td className="border border-black p-1 bg-gray-200 font-bold">
-              STATUS
-            </td>
-            <td className="border border-black p-1">
-              {market.isFinalized ? (
-                <span className="font-bold">
-                  FINALIZED - RESULT:{" "}
-                  {market.finalAnswer === "1" ? "YES" : "NO"}
-                </span>
+              {market.isCancelled ? (
+                <span className="font-bold text-gray-600">{dict?.market_details_status_cancelled}</span>
               ) : market.isBlacklisted ? (
-                <span className="font-bold text-red-600">BLACKLISTED</span>
+                <span className="font-bold text-red-600">{dict?.market_details_status_blacklisted}</span>
+              ) : market.isExpired ? (
+                <span className="font-bold text-orange-600">{dict?.market_details_status_expired}</span>
+              ) : market.isFinalized ? (
+                <span className="font-bold">
+                  {dict?.market_details_status_finalized}{" "}
+                  {market.finalAnswer === "1" ? dict?.common_yes : dict?.common_no}
+                </span>
               ) : timeUntilEnd > 0 ? (
                 <span>
-                  ACTIVE - Ends in: {daysLeft}d {hoursLeft}h {minutesLeft}m
+                  {dict?.market_details_status_active} {daysLeft}d {hoursLeft}h {minutesLeft}m
                 </span>
               ) : (
-                <span className="font-bold">ENDED - Awaiting Resolution</span>
+                <span className="font-bold">{dict?.market_details_status_ended}</span>
               )}
             </td>
           </tr>
           <tr>
             <td className="border border-black p-1 bg-gray-200 font-bold">
-              METADATA URI
+              {dict?.market_details_metadata_uri}
             </td>
             <td className="border border-black p-1">
               <a
                 href={market.uri}
                 target="_blank"
-                className="text-blue-600 underline"
+                className="text-blue-600 break-all underline"
               >
                 {market.uri}
               </a>
@@ -148,10 +183,10 @@ const MarketDetails: FunctionComponent<MarketDetailsProps> = ({
           </tr>
           <tr>
             <td className="border border-black p-1 bg-gray-200 font-bold">
-              CREATION TX
+              {dict?.market_details_creation_tx}
             </td>
-            <td className="border border-black p-1">
-              Block #{market.blockNumber} |{" "}
+            <td className="border border-black p-1 flex flex-wrap">
+              {dict?.common_block_number?.replace("{number}", market.blockNumber)} |{" "}
               {new Date(
                 parseInt(market.blockTimestamp) * 1000
               ).toLocaleString()}{" "}
@@ -159,7 +194,7 @@ const MarketDetails: FunctionComponent<MarketDetailsProps> = ({
               <a
                 href={`${network.blockExplorer}/tx/${market.transactionHash}`}
                 target="_blank"
-                className="text-blue-600 underline ml-1"
+                className="text-blue-600 break-all underline ml-1"
               >
                 {market.transactionHash}
               </a>

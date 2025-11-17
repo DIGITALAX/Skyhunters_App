@@ -1,11 +1,11 @@
-import { FunctionComponent, JSX } from "react";
+import { getDictionary } from "@/app/[lang]/dictionaries";
+import { tParams } from "@/app/[lang]/layout";
+import FooterEntry from "./FooterEntry";
 
-const Footer: FunctionComponent = (): JSX.Element => {
-  return (
-    <div className="text-center mt-5 text-gray-500 border-t-2 border-black pt-2">
-      <p>Skyhunters v1.0 - Powered by $MONA</p>
-    </div>
+export default async function Footer({ params }: { params: tParams }) {
+  const { lang } = await params;
+  const dict = await (getDictionary as (locale: any) => Promise<any>)(
+    lang ?? "en"
   );
-};
-
-export default Footer;
+  return <FooterEntry dict={dict} />;
+}

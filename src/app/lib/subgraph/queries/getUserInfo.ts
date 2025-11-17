@@ -1,27 +1,25 @@
 import { skyhuntersClient } from "../clients/graphql";
 import { gql } from "@apollo/client";
 
-const USER_MARKET_VOTE = `
-query($voter: String!, $marketId: Int!) {
-  proposalDisputeVotes(where: {voter: $voter, marketId: $marketId}) {
+const USER_PROPOSAL_VOTE = `
+query($voter: String!, $proposalId: Int!) {
+  proposalVotes(where: {voter: $voter, proposal_: {proposalId: $proposalId}}) {
       voted
       support
-      blockNumber
-      blockTimestamp
-      transactionHash
+      voter
   }
 }
 `;
 
-export const getUserMarketVote = async (
+export const getUserProposalVote = async (
   voter: string,
-  marketId: number
+  proposalId: number
 ): Promise<any> => {
   const queryPromise = skyhuntersClient.query({
-    query: gql(USER_MARKET_VOTE),
+    query: gql(USER_PROPOSAL_VOTE),
     variables: {
-      voter,
-      marketId,
+      voter: voter.toLowerCase(),
+      proposalId,
     },
     fetchPolicy: "no-cache",
     errorPolicy: "all",
@@ -43,26 +41,24 @@ export const getUserMarketVote = async (
 
 
 const USER_BLACKLIST_VOTE = `
-query($voter: String!, $marketId: Int!) {
-  blacklistVotes(where: {voter: $voter, marketId: $marketId}) {
+query($voter: String!, $blacklistId: Int!) {
+  blacklistVotes(where: {voter: $voter, blacklist_: {blacklistId: $blacklistId}}) {
       voted
       support
-      blockNumber
-      blockTimestamp
-      transactionHash
+      voter
   }
 }
 `;
 
 export const getUserBlacklistVote = async (
   voter: string,
-  marketId: number
+  blacklistId: number
 ): Promise<any> => {
   const queryPromise = skyhuntersClient.query({
     query: gql(USER_BLACKLIST_VOTE),
     variables: {
-      voter,
-      marketId,
+      voter: voter.toLowerCase(),
+      blacklistId,
     },
     fetchPolicy: "no-cache",
     errorPolicy: "all",
@@ -91,6 +87,10 @@ query($id: String!) {
         market {
           finalAnswer
           marketId
+          isCancelled
+          isExpired
+          isFinalized
+          isBlacklisted
         }
         winningsRedeemed
       }
@@ -169,6 +169,7 @@ query($id: String!) {
         voted
         support
         blacklist {
+          blacklistId
           market {
             marketId
           }

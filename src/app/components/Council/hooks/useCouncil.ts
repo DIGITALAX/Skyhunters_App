@@ -9,9 +9,8 @@ import { ABIS } from "@/abis";
 import { Blacklist, Proposal } from "../../Common/types/common.types";
 import { PenaltyForgive } from "../../Manage/types/manage.types";
 import { getCouncilVotes } from "@/app/lib/subgraph/queries/getVotes";
-import { dummyCouncilVotes } from "@/app/lib/dummy";
 
-const useCouncil = () => {
+const useCouncil = (dict: any) => {
   const { address } = useAccount();
   const publicClient = usePublicClient();
   const { data: walletClient } = useWalletClient();
@@ -19,15 +18,16 @@ const useCouncil = () => {
   const network = getCurrentNetwork();
   const contracts = getCoreContractAddresses(network.chainId);
   const [councilLoading, setCouncilLoading] = useState<boolean>(false);
-  const [disputeVoteLoading, setDisputeVoteLoading] = useState<boolean>(false);
+  const [disputeVoteLoading, setDisputeVoteLoading] = useState<string | null>(null);
   const [blacklistVoteLoading, setBlacklistVoteLoading] =
-    useState<boolean>(false);
-  const [penaltyVoteLoading, setPenaltyVoteLoading] = useState<boolean>(false);
+    useState<string | null>(null);
+  const [penaltyVoteLoading, setPenaltyVoteLoading] = useState<string | null>(null);
   const [proposePenaltyLoading, setProposePenaltyLoading] = useState<boolean>(false);
+  const [executeBlacklistLoading, setExecuteBlacklistLoading] = useState<string | null>(null);
   const [targetAddress, setTargetAddress] = useState<string>("");
   const [activeTab, setActiveTab] = useState<
-    "disputes" | "blacklists" | "forgive penalties"
-  >("disputes");
+    "proposals" | "blacklists" | "forgive penalties"
+  >("proposals");
   const [votes, setVotes] = useState<{
     blacklists: Blacklist[];
     penalties: PenaltyForgive[];
@@ -43,13 +43,12 @@ const useCouncil = () => {
     setCouncilLoading(true);
     try {
       const blockTimestampNow = Math.floor(Date.now() / 1000);
-      // const data = await getCouncilVotes(blockTimestampNow);
-      // setVotes({
-      //   blacklists: data?.data?.blacklists || [],
-      //   penalties: data?.data?.penaltyForgives || [],
-      //   disputes: data?.data?.proposals || [],
-      // });
-      setVotes(dummyCouncilVotes as any);
+      const data = await getCouncilVotes(blockTimestampNow);
+      setVotes({
+        blacklists: data?.data?.blacklists || [],
+        penalties: data?.data?.penaltyForgives || [],
+        disputes: data?.data?.proposals || [],
+      });
     } catch (err: any) {
       console.error(err.message);
     }
@@ -58,7 +57,7 @@ const useCouncil = () => {
 
   const voteOnDispute = async (proposalId: number, support: boolean) => {
     if (!address || !walletClient || !publicClient) return;
-    setDisputeVoteLoading(true);
+    setDisputeVoteLoading(`${proposalId}-${support}`);
     try {
       const hash = await walletClient.writeContract({
         address: contracts.council as `0x${string}`,
@@ -69,20 +68,24 @@ const useCouncil = () => {
 
       await publicClient.waitForTransactionReceipt({ hash });
       context?.showSuccess(
-        `Vote cast on dispute ${support ? "in favor" : "against"}!`,
+        `${dict?.council_vote_dispute_success_prefix} ${
+          support ? dict?.council_vote_support : dict?.council_vote_against
+        }!`,
         hash
       );
       getVotes();
     } catch (err: any) {
       console.error(err.message);
-      context?.showError(`Failed to vote on dispute: ${err.message}`);
+      context?.showError(
+        `${dict?.council_vote_dispute_failed_prefix} ${err.message}`
+      );
     }
-    setDisputeVoteLoading(false);
+    setDisputeVoteLoading(null);
   };
 
   const voteOnBlacklist = async (blacklistId: number, support: boolean) => {
     if (!address || !walletClient || !publicClient) return;
-    setBlacklistVoteLoading(true);
+    setBlacklistVoteLoading(`${blacklistId}-${support}`);
     try {
       const hash = await walletClient.writeContract({
         address: contracts.council as `0x${string}`,
@@ -93,20 +96,24 @@ const useCouncil = () => {
 
       await publicClient.waitForTransactionReceipt({ hash });
       context?.showSuccess(
-        `Vote cast on blacklist ${support ? "in favor" : "against"}!`,
+        `${dict?.council_vote_blacklist_success_prefix} ${
+          support ? dict?.council_vote_support : dict?.council_vote_against
+        }!`,
         hash
       );
       getVotes();
     } catch (err: any) {
       console.error(err.message);
-      context?.showError(`Failed to vote on blacklist: ${err.message}`);
+      context?.showError(
+        `${dict?.council_vote_blacklist_failed_prefix} ${err.message}`
+      );
     }
-    setBlacklistVoteLoading(false);
+    setBlacklistVoteLoading(null);
   };
 
   const voteOnPenalty = async (penaltyForgiveId: number, support: boolean) => {
     if (!address || !walletClient || !publicClient) return;
-    setPenaltyVoteLoading(true);
+    setPenaltyVoteLoading(`${penaltyForgiveId}-${support}`);
     try {
       const hash = await walletClient.writeContract({
         address: contracts.council as `0x${string}`,
@@ -117,17 +124,19 @@ const useCouncil = () => {
 
       await publicClient.waitForTransactionReceipt({ hash });
       context?.showSuccess(
-        `Vote cast on penalty forgiveness ${support ? "in favor" : "against"}!`,
+        `${dict?.council_vote_penalty_success_prefix} ${
+          support ? dict?.council_vote_support : dict?.council_vote_against
+        }!`,
         hash
       );
       getVotes();
     } catch (err: any) {
       console.error(err.message);
       context?.showError(
-        `Failed to vote on penalty forgiveness: ${err.message}`
+        `${dict?.council_vote_penalty_failed_prefix} ${err.message}`
       );
     }
-    setPenaltyVoteLoading(false);
+    setPenaltyVoteLoading(null);
   };
 
   const hasUserVoted = (item: any): boolean => {
@@ -136,6 +145,29 @@ const useCouncil = () => {
     return item.votes.some(
       (vote: any) => vote.voter.toLowerCase() === address.toLowerCase()
     );
+  };
+
+  const executeMarketBlacklist = async (blacklistId: number) => {
+    if (!address || !walletClient || !publicClient) return;
+    setExecuteBlacklistLoading(String(blacklistId));
+    try {
+      const hash = await walletClient.writeContract({
+        address: contracts.council as `0x${string}`,
+        abi: ABIS.Council,
+        functionName: "executeMarketBlacklist",
+        args: [blacklistId],
+      });
+
+      await publicClient.waitForTransactionReceipt({ hash });
+      context?.showSuccess(dict?.council_execute_blacklist_success, hash);
+      getVotes();
+    } catch (err: any) {
+      console.error(err.message);
+      context?.showError(
+        `${dict?.council_execute_blacklist_failed_prefix} ${err.message}`
+      );
+    }
+    setExecuteBlacklistLoading(null);
   };
 
   const proposePenaltyForgiveness = async () => {
@@ -151,7 +183,7 @@ const useCouncil = () => {
 
       await publicClient.waitForTransactionReceipt({ hash });
       context?.showSuccess(
-        `Penalty forgiveness proposal created for ${targetAddress}!`,
+        `${dict?.council_penalty_propose_success_prefix} ${targetAddress}!`,
         hash
       );
       setTargetAddress("");
@@ -159,7 +191,7 @@ const useCouncil = () => {
     } catch (err: any) {
       console.error(err.message);
       context?.showError(
-        `Failed to create penalty forgiveness proposal: ${err.message}`
+        `${dict?.council_penalty_propose_failed_prefix} ${err.message}`
       );
     }
     setProposePenaltyLoading(false);
@@ -170,7 +202,7 @@ const useCouncil = () => {
     const deadlineTime = Number(deadline);
     const timeLeft = deadlineTime - now;
 
-    if (timeLeft <= 0) return "EXPIRED";
+    if (timeLeft <= 0) return dict?.council_expired;
 
     const days = Math.floor(timeLeft / 86400);
     const hours = Math.floor((timeLeft % 86400) / 3600);
@@ -188,7 +220,7 @@ const useCouncil = () => {
       votes.blacklists.length < 1 &&
       votes.penalties.length < 1 &&
       votes.disputes.length < 1
-      // && context?.roles?.council
+      && context?.roles?.council
     ) {
       getVotes();
     }
@@ -203,9 +235,11 @@ const useCouncil = () => {
     blacklistVoteLoading,
     penaltyVoteLoading,
     proposePenaltyLoading,
+    executeBlacklistLoading,
     voteOnDispute,
     voteOnBlacklist,
     voteOnPenalty,
+    executeMarketBlacklist,
     hasUserVoted,
     getTimeUntilDeadline,
     getVotes,

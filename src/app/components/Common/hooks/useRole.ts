@@ -28,25 +28,25 @@ const useRole = () => {
           address: contracts.accessControl as `0x${string}`,
           abi: ABIS.AccessControl,
           functionName: "hasRole",
-          args: [address, RoleType.BLACKLISTER],
+          args: [RoleType.BLACKLISTER, address],
         })) as boolean,
         (await publicClient.readContract({
           address: contracts.accessControl as `0x${string}`,
           abi: ABIS.AccessControl,
           functionName: "hasRole",
-          args: [address, RoleType.CREATOR],
+          args: [RoleType.CREATOR, address],
         })) as boolean,
         (await publicClient.readContract({
           address: contracts.accessControl as `0x${string}`,
           abi: ABIS.AccessControl,
           functionName: "hasRole",
-          args: [address, RoleType.PROPOSER],
+          args: [RoleType.PROPOSER, address],
         })) as boolean,
         (await publicClient.readContract({
           address: contracts.accessControl as `0x${string}`,
           abi: ABIS.AccessControl,
           functionName: "hasRole",
-          args: [address, RoleType.COUNCIL],
+          args: [RoleType.COUNCIL, address],
         })) as boolean,
       ];
 
@@ -65,12 +65,12 @@ const useRole = () => {
   const getRoleReqs = async () => {
     try {
       const data = await getRoleInfo();
-      setReqs(
-        data?.data?.roles?.map((role: any) => ({
-          ...role,
-          role: Number(role.role),
-        }))
-      );
+      const mappedRoles = data?.data?.roles?.map((role: any) => ({
+        ...role,
+        role: Number(role.role),
+      }));
+      setReqs(mappedRoles);
+      context?.setRoleInfo(mappedRoles || []);
     } catch (err: any) {
       console.error(err.message);
     }

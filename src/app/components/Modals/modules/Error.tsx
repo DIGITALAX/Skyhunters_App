@@ -1,7 +1,7 @@
 import { AppContext } from "@/app/lib/Providers";
 import { useContext } from "react";
 
-export const Error = () => {
+export const Error = ({ dict }: { dict: any }) => {
   const context = useContext(AppContext);
 
   if (!context?.errorData) return null;
@@ -15,7 +15,7 @@ export const Error = () => {
               <div className="w-5 h-5 bg-red-500 border border-black flex items-center justify-center">
                 <span className="text-white text-xs">!</span>
               </div>
-              <div className="text-lg">Error</div>
+              <div className="text-lg">{dict?.modal_error_title}</div>
             </div>
             <button
               onClick={context.hideError}
@@ -38,7 +38,7 @@ export const Error = () => {
               onClick={context.hideError}
               className="px-4 py-2 text-xs border border-black bg-black text-white hover:bg-gray-800 transition-colors"
             >
-              Close
+              {dict?.modal_close}
             </button>
           </div>
         </div>

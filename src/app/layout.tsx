@@ -2,23 +2,20 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { LOCALES } from "./lib/constants";
 import { Providers } from "./lib/Providers";
-import Header from "./components/Common/modules/Header";
-import Footer from "./components/Common/modules/Footer";
-import { Modals } from "./components/Modals/modules/Modals";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://skyhunters.agentmeme.xyz/"),
   title: "Skyhunters",
-  description: "",
+  description: "Autonomous Oracle Markets @ DIGITALAX",
   twitter: {
     card: "summary_large_image",
     creator: "@emmajane1313",
     title: "Skyhunters",
-    description: "",
+    description: "Autonomous Oracle Markets @ DIGITALAX",
   },
   openGraph: {
     title: "Skyhunters",
-    description: "",
+    description: "Autonomous Oracle Markets @ DIGITALAX",
   },
   robots: {
     googleBot: {
@@ -92,6 +89,7 @@ export default function RootLayout({
                   "https://emmajanemackinnonlee.ai/",
                   "https://emmajanemackinnonlee.org/",
                   "https://emmajanemackinnonlee-f3manifesto.com/",
+                  "https://emmajanemackinnonlee-web3.com/",
                   "https://emmajanemackinnonlee-digitalax.com/",
                   "https://emmajanemackinnonlee-history.com/",
                   "https://emmajanemackinnonlee-runway.com/",
@@ -116,14 +114,19 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <Providers>
-          <div className="max-w-3xl text-xs mx-auto">
-            <Header />
-            {children}
-            <Footer />
-            <Modals />
-          </div>
-        </Providers>
+        <video
+          className="video-background"
+          draggable={false}
+          loop
+          poster="/images/outbackglitch.png"
+          muted
+          autoPlay
+          playsInline
+        >
+          <source src="/videos/glitchoutback.mp4" type="video/mp4" />
+        </video>
+        <div className="video-overlay"></div>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

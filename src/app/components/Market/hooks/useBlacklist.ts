@@ -11,7 +11,8 @@ import { getUserBlacklistVote } from "@/app/lib/subgraph/queries/getUserInfo";
 
 const useBlacklist = (
   market: Market | undefined,
-  getMarketInfo: () => Promise<void>
+  getMarketInfo: () => Promise<void>,
+  dict: any
 ) => {
   const { address } = useAccount();
   const publicClient = usePublicClient();
@@ -41,12 +42,12 @@ const useBlacklist = (
       !market ||
       market?.blacklist
     ) {
-      context?.showError("Please connect your wallet");
+      context?.showError(dict?.blacklist_connect_wallet_error);
       return;
     }
 
     if (!context?.roles?.blacklister) {
-      context?.showError("You must have Blacklister role to create blacklists");
+      context?.showError(dict?.blacklist_role_required);
       return;
     }
 
@@ -73,9 +74,12 @@ const useBlacklist = (
       });
 
       await publicClient.waitForTransactionReceipt({ hash });
+      context?.showSuccess(dict?.blacklist_create_success, hash);
+      setBlacklistValues({ reason: "", comments: "" });
       await getMarketInfo();
     } catch (err: any) {
       console.error(err.message);
+      context?.showError(`${dict?.blacklist_create_failed} ${err.message}`);
     }
 
     setBlacklistLoading(false);
@@ -83,17 +87,16 @@ const useBlacklist = (
 
   const voteOnBlacklist = async () => {
     if (!walletClient || !publicClient || !address || userVoteHistory) {
-      context?.showError("Please connect your wallet");
+      context?.showError(dict?.blacklist_connect_wallet_error);
       return;
     }
 
     if (!context?.roles?.council) {
-      context?.showError("You must have Council role to vote on blacklists");
+      context?.showError(dict?.blacklist_council_required);
       return;
     }
 
     setBlacklistVoteLoading(true);
-
     try {
       const hash = await walletClient.writeContract({
         address: contracts.council,
@@ -104,9 +107,17 @@ const useBlacklist = (
       });
 
       await publicClient.waitForTransactionReceipt({ hash });
+      context?.showSuccess(
+        dict?.blacklist_vote_success.replace(
+          "{direction}",
+          vote ? dict?.council_vote_support : dict?.council_vote_against
+        ),
+        hash
+      );
       await getMarketInfo();
     } catch (err: any) {
       console.error(err.message);
+      context?.showError(`${dict?.blacklist_vote_failed} ${err.message}`);
     }
     setBlacklistVoteLoading(false);
   };
@@ -125,31 +136,35 @@ const useBlacklist = (
       });
 
       await publicClient.waitForTransactionReceipt({ hash });
+      context?.showSuccess(dict?.blacklist_execute_success, hash);
       await getMarketInfo();
     } catch (err: any) {
       console.error(err.message);
+      context?.showError(`${dict?.blacklist_execute_failed} ${err.message}`);
     }
     setExecuteLoading(false);
   };
 
-  const getUserVoteHistory = async () => {
-    if (!address || !market) return;
+  const getUserVote = async () => {
+    if (!address || !market?.blacklist?.blacklistId) {
+      setUserVoteHistory(undefined);
+      return;
+    }
     try {
       const data = await getUserBlacklistVote(
         address,
-        Number(market?.blacklist?.blacklistId || 0)
+        Number(market.blacklist.blacklistId)
       );
       setUserVoteHistory(data?.data?.blacklistVotes?.[0]);
     } catch (err: any) {
       console.error(err.message);
+      setUserVoteHistory(undefined);
     }
   };
 
   useEffect(() => {
-    if (address && !userVoteHistory) {
-      getUserVoteHistory();
-    }
-  }, [address]);
+    getUserVote();
+  }, [address, market?.blacklist?.blacklistId]);
 
   return {
     createBlacklist,

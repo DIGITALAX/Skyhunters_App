@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { getCurrentNetwork } from "@/app/lib/constants";
 import { AppContext } from "@/app/lib/Providers";
 
-export const Success = () => {
+export const Success = ({ dict }: { dict: any }) => {
   const context = useContext(AppContext);
 
   if (!context?.successData) return null;
@@ -21,7 +21,7 @@ export const Success = () => {
               <div className="w-5 h-5 bg-green-500 border border-black flex items-center justify-center">
                 <span className="text-white text-xs">✓</span>
               </div>
-              <div className="text-lg">Success</div>
+              <div className="text-lg">{dict?.modal_success_title}</div>
             </div>
             <button
               onClick={context.hideSuccess}
@@ -41,13 +41,13 @@ export const Success = () => {
 
           {context.successData.txHash && (
             <div className="border border-black p-3">
-              <div className="text-xs mb-2">Transaction Hash:</div>
+              <div className="text-xs mb-2">{dict?.modal_tx_hash}</div>
               {explorerUrl ? (
                 <a
                   href={explorerUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs font-mono break-all text-blue-600 hover:text-blue-800 underline transition-colors"
+                  className="text-xs break-all font-mono break-all text-blue-600 hover:text-blue-800 underline transition-colors"
                 >
                   {context.successData.txHash}
                 </a>
@@ -66,7 +66,7 @@ export const Success = () => {
               onClick={context.hideSuccess}
               className="px-4 py-2 text-xs border border-black bg-black text-white hover:bg-gray-800 transition-colors"
             >
-              Close
+              {dict?.modal_close}
             </button>
           </div>
         </div>

@@ -1,32 +1,26 @@
-import { useAccount, useConnect as useWagmiConnect, useDisconnect } from "wagmi";
-import { useModal } from "connectkit";
-import { useCallback } from "react";
-
+import { usePathname, useRouter } from "next/navigation";
+import { useAccount } from "wagmi";
 export function useConnect() {
-  const { address, isConnected, isConnecting, chain } = useAccount();
-  const { disconnect } = useDisconnect();
-  const { setOpen } = useModal();
+  const { address, isConnected, isConnecting } = useAccount();
+  const router = useRouter();
+  const path = usePathname();
 
-  const openConnectModal = useCallback(() => {
-    setOpen(true);
-  }, [setOpen]);
+  const changeLanguage = () => {
+    const segments = path.split("/");
+    segments[1] = path.includes("/en/") ? "es" : "en";
+    const newPath = segments.join("/");
 
-  const handleDisconnect = useCallback(() => {
-    disconnect();
-  }, [disconnect]);
+    document.cookie = `NEXT_LOCALE=${
+      path.includes("/en/") ? "es" : "en"
+    }; path=/; SameSite=Lax`;
 
-  const formatAddress = useCallback((addr: string) => {
-    if (!addr) return "";
-    return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
-  }, []);
+    router.push(newPath);
+  };
 
   return {
     address,
     isConnected,
+    changeLanguage,
     isConnecting,
-    chain,
-    disconnect: handleDisconnect,
-    openModal: openConnectModal,
-    formatAddress,
   };
 }

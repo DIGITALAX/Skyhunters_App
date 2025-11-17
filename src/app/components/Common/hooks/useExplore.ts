@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Market } from "../types/common.types";
 import { getAllMarkets } from "@/app/lib/subgraph/queries/getMarkets";
-import { DUMMY_MARKETS } from "@/app/lib/dummy";
 import { useRouter } from "next/navigation";
+import { ensureMetadata } from "@/app/lib/utils";
 
 const useExplore = () => {
   const [explore, setExplore] = useState<Market[]>([]);
@@ -42,9 +42,12 @@ const useExplore = () => {
           return;
         }
 
-        // const data = await getAllMarkets(20, skipValue);
-        // let allExplore = data?.data?.markets;
-        let allExplore = DUMMY_MARKETS;
+        const data = await getAllMarkets(20, skipValue);
+        let allExplore = await Promise.all(
+          data?.data?.markets?.map(async (market: any) => {
+            return await ensureMetadata(market);
+          })
+        );
         if (!allExplore || allExplore.length < 20) {
           setHasMoreExplore(false);
         }
@@ -79,7 +82,6 @@ const useExplore = () => {
     }
   }, [getAllExplore, exploreLoading, hasMoreExplore]);
 
-
   const handleMarketClick = (marketId: string) => {
     router.push(`/market/${marketId}`);
   };
@@ -90,10 +92,12 @@ const useExplore = () => {
 
   const filteredExplore = explore.filter((market) => {
     if (filter === "all") return true;
-    if (filter === "active") return !market.isFinalized && !market.isBlacklisted;
+    if (filter === "active")
+      return !market.isFinalized && !market.isBlacklisted;
     if (filter === "finalized") return market.isFinalized;
     if (filter === "blacklisted") return market.isBlacklisted;
-    if (filter === "proposed") return market.proposal && !market.proposal.disputed;
+    if (filter === "proposed")
+      return market.proposal && !market.proposal.disputed;
     if (filter === "disputed") return market.proposal?.disputed;
     return true;
   });

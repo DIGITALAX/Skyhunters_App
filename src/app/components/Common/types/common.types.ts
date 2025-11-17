@@ -21,6 +21,7 @@ export interface Market {
   marketId: string;
   creator: string;
   uri: string;
+  proposalWindowEnds: string;
   metadata: {
     question: string;
     source: string;
@@ -32,6 +33,8 @@ export interface Market {
   maxPrice: string;
   precision: string;
   isFinalized: boolean;
+  isCancelled: boolean;
+  isExpired: boolean;
   isBlacklisted: boolean;
   finalAnswer: string;
   totalVolume: string;
@@ -68,6 +71,14 @@ export interface Bond {
 
 export interface Proposal {
   proposalId: string;
+  market?: {
+    marketId: string;
+    metadata?: {
+      question: string;
+      description: string;
+      image: string;
+    };
+  };
   proposerBond: Bond;
   disputeWindowEnds: string;
   councilWindowEnds: string;
@@ -96,8 +107,8 @@ export interface Vote {
   voted: boolean;
   support: boolean;
   voter: string;
-  proposal?: Proposal
-  blacklist?: Blacklist
+  proposal?: Proposal;
+  blacklist?: Blacklist;
   blockNumber: string;
   blockTimestamp: string;
   transactionHash: string;
@@ -159,4 +170,9 @@ export interface UserRoles {
   proposer: boolean;
   blacklister: boolean;
   council: boolean;
+}
+
+export interface CountdownProps {
+  endTime: string;
+  dict: any;
 }

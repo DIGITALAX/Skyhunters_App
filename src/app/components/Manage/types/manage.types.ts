@@ -65,3 +65,16 @@ export interface PenaltyForgive {
   blockTimestamp: string;
   transactionHash: string;
 }
+
+export type RoleKey = "creator" | "proposer" | "blacklister" | "council";
+
+export type TokenRequirement = {
+  tokenAddress: `0x${string}`;
+  minAmount: bigint;
+  isNFT: boolean;
+};
+
+export type RoleRequirement = {
+  tokenRequirements: TokenRequirement[];
+  threshold: bigint;
+};

@@ -8,11 +8,12 @@ import { ABIS } from "@/abis";
 import { AppContext } from "@/app/lib/Providers";
 import { getMonaAllowance, getMonaBalance } from "@/app/lib/helpers/mona";
 import { Market, Vote } from "../../Common/types/common.types";
-import { getUserMarketVote } from "@/app/lib/subgraph/queries/getUserInfo";
+import { getUserProposalVote } from "@/app/lib/subgraph/queries/getUserInfo";
 
 const useProposal = (
   market: Market | undefined,
-  getMarketInfo: () => Promise<void>
+  getMarketInfo: () => Promise<void>,
+  dict: any
 ) => {
   const { address } = useAccount();
   const publicClient = usePublicClient();
@@ -22,11 +23,13 @@ const useProposal = (
   const [disputeLoading, setDisputeLoading] = useState<boolean>(false);
   const [executeLoading, setExecuteLoading] = useState<boolean>(false);
   const [bondApproved, setBondApproved] = useState<boolean>(false);
+  const [approveLoading, setApproveLoading] = useState<boolean>(false);
   const [proposalVoteLoading, setProposalVoteLoading] =
     useState<boolean>(false);
   const [settleLoading, setSettleLoading] = useState<boolean>(false);
   const [vote, setVote] = useState<boolean>();
   const [userVoteHistory, setUserVoteHistory] = useState<Vote>();
+  const [baseBond, setBaseBond] = useState<number>(0);
   const [proposalValues, setProposalValues] = useState<{
     answer: "yes" | "no";
     bondAmount: string;
@@ -45,12 +48,19 @@ const useProposal = (
       !market ||
       market?.proposal
     ) {
-      context?.showError("Please connect your wallet");
+      context?.showError(dict?.proposal_connect_wallet_error);
       return;
     }
 
     if (!context?.roles?.proposer) {
-      context?.showError("You must have Proposer role to create proposals");
+      context?.showError(dict?.proposal_role_required);
+      return;
+    }
+
+    if (Number(proposalValues.bondAmount) < baseBond) {
+      context?.showError(
+        dict?.proposal_bond_min_prefix.replace("{amount}", baseBond.toString())
+      );
       return;
     }
 
@@ -64,7 +74,7 @@ const useProposal = (
         publicClient,
         contracts
       );
-      
+
       if (allowance < bondAmountWei) {
         await approveBond();
       }
@@ -81,8 +91,10 @@ const useProposal = (
 
       await publicClient.waitForTransactionReceipt({ hash });
       await getMarketInfo();
+      context?.showSuccess(dict?.proposal_create_success, hash);
     } catch (err: any) {
       console.error(err.message);
+      context?.showError(`${dict?.proposal_create_failed} ${err.message}`);
     }
 
     setProposalLoading(false);
@@ -148,13 +160,18 @@ const useProposal = (
   };
 
   const voteOnProposal = async () => {
-    if (!walletClient || !publicClient || !address || userVoteHistory) {
-      context?.showError("Please connect your wallet");
+    if (!walletClient || !publicClient || !address) {
+      context?.showError(dict?.proposal_connect_wallet_error);
+      return;
+    }
+
+    if (userVoteHistory) {
+      context?.showError(dict?.proposal_vote_already);
       return;
     }
 
     if (!context?.roles?.council) {
-      context?.showError("You must have Council role to vote on proposals");
+      context?.showError(dict?.proposal_vote_role_required);
       return;
     }
 
@@ -164,15 +181,18 @@ const useProposal = (
       const hash = await walletClient.writeContract({
         address: contracts.council,
         abi: ABIS.Council,
-        functionName: "vote",
-        args: [BigInt(market?.marketId!), vote],
+        functionName: "voteOnProposalDispute",
+        args: [BigInt(market?.proposal?.proposalId!), vote],
         account: address,
       });
 
       await publicClient.waitForTransactionReceipt({ hash });
       await getMarketInfo();
+      await getUserVote();
+      context?.showSuccess(dict?.proposal_vote_success, hash);
     } catch (err: any) {
       console.error(err.message);
+      context?.showError(`${dict?.proposal_vote_failed} ${err.message}`);
     }
     setProposalVoteLoading(false);
   };
@@ -213,8 +233,10 @@ const useProposal = (
 
       await publicClient.waitForTransactionReceipt({ hash });
       await getMarketInfo();
+      context?.showSuccess(dict?.proposal_settle_disputed_success, hash);
     } catch (err: any) {
       console.error(err.message);
+      context?.showError(`${dict?.proposal_settle_disputed_failed} ${err.message}`);
     }
     setSettleLoading(false);
   };
@@ -234,8 +256,10 @@ const useProposal = (
 
       await publicClient.waitForTransactionReceipt({ hash });
       await getMarketInfo();
+      context?.showSuccess(dict?.proposal_settle_undisputed_success, hash);
     } catch (err: any) {
       console.error(err.message);
+      context?.showError(`${dict?.proposal_settle_undisputed_failed} ${err.message}`);
     }
     setSettleLoading(false);
   };
@@ -244,29 +268,38 @@ const useProposal = (
     if (!walletClient || !address || !publicClient)
       throw new Error("Wallet not connected");
 
-    const approveHash = await walletClient.writeContract({
-      address: contracts.mona,
-      abi: [
-        {
-          type: "function",
-          name: "approve",
-          inputs: [
-            { name: "spender", type: "address", internalType: "address" },
-            { name: "amount", type: "uint256", internalType: "uint256" },
-          ],
-          outputs: [{ name: "", type: "bool", internalType: "bool" }],
-          stateMutability: "nonpayable",
-        },
-      ],
-      functionName: "approve",
-      args: [
-        contracts.proposal,
-        BigInt(Number(proposalValues.bondAmount) * 10 ** 18),
-      ],
-      account: address,
-    });
-    await publicClient.waitForTransactionReceipt({ hash: approveHash });
-    setBondApproved(true);
+    setApproveLoading(true);
+    try {
+      const approveHash = await walletClient.writeContract({
+        address: contracts.mona,
+        abi: [
+          {
+            type: "function",
+            name: "approve",
+            inputs: [
+              { name: "spender", type: "address", internalType: "address" },
+              { name: "amount", type: "uint256", internalType: "uint256" },
+            ],
+            outputs: [{ name: "", type: "bool", internalType: "bool" }],
+            stateMutability: "nonpayable",
+          },
+        ],
+        functionName: "approve",
+        args: [
+          contracts.proposal,
+          BigInt(Number(proposalValues.bondAmount) * 10 ** 18),
+        ],
+        account: address,
+      });
+      await publicClient.waitForTransactionReceipt({ hash: approveHash });
+      setBondApproved(true);
+      context?.showSuccess(dict?.proposal_bond_approve_success, approveHash);
+    } catch (err: any) {
+      context?.showError(
+        `${dict?.proposal_bond_approve_failed} ${err.message}`
+      );
+    }
+    setApproveLoading(false);
   };
 
   const checkBondApproved = async () => {
@@ -286,13 +319,35 @@ const useProposal = (
     }
   };
 
-  const getUserVoteHistory = async () => {
-    if (!address || !market) return;
+  const getUserVote = async () => {
+    if (!address || !market?.proposal?.proposalId) {
+      setUserVoteHistory(undefined);
+      return;
+    }
     try {
-      const data = await getUserMarketVote(address, Number(market?.marketId));
-      setUserVoteHistory(data?.data?.proposalDisputeVotes?.[0]);
+      const data = await getUserProposalVote(
+        address,
+        Number(market.proposal.proposalId)
+      );
+      setUserVoteHistory(data?.data?.proposalVotes?.[0]);
     } catch (err: any) {
       console.error(err.message);
+      setUserVoteHistory(undefined);
+    }
+  };
+
+  const getBaseBond = async () => {
+    if (!publicClient) return;
+    try {
+      const bond = (await publicClient.readContract({
+        address: contracts.proposal as `0x${string}`,
+        abi: ABIS.Proposal,
+        functionName: "getBaseBondAmount",
+        args: [],
+      })) as any;
+      setBaseBond(Number(bond) / 10 ** 18);
+    } catch (err: any) {
+      console.error("Error fetching base bond:", err.message);
     }
   };
 
@@ -303,10 +358,14 @@ const useProposal = (
   }, [address, proposalValues.bondAmount, publicClient]);
 
   useEffect(() => {
-    if (address && !userVoteHistory) {
-      getUserVoteHistory();
+    getUserVote();
+  }, [address, market?.proposal?.proposalId]);
+
+  useEffect(() => {
+    if (publicClient) {
+      getBaseBond();
     }
-  }, [address]);
+  }, [publicClient]);
 
   return {
     createProposal,
@@ -320,6 +379,7 @@ const useProposal = (
     executeProposalDispute,
     approveBond,
     bondApproved,
+    approveLoading,
     disputeLoading,
     executeLoading,
     proposalVoteLoading,
@@ -327,6 +387,7 @@ const useProposal = (
     vote,
     setVote,
     userVoteHistory,
+    baseBond,
   };
 };
 
