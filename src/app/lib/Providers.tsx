@@ -1,10 +1,10 @@
 "use client";
 
 import { WagmiProvider, createConfig, http } from "wagmi";
+import { injected } from "wagmi/connectors";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ConnectKitProvider, getDefaultConfig } from "connectkit";
+import { ConnectKitProvider } from "connectkit";
 import { chains } from "@lens-chain/sdk/viem";
-import { getCurrentNetwork } from "./constants";
 import { createContext, useState } from "react";
 import {
   AppContextType,
@@ -14,25 +14,20 @@ import {
   Role,
 } from "../components/Common/types/common.types";
 
-const currentNetwork = getCurrentNetwork();
-
 export const AppContext = createContext<AppContextType | undefined>(undefined);
 
-const config = createConfig(
-  getDefaultConfig({
-    appName: "Skyhunters",
-    appDescription: "Autonomous Oracle Markets @ DIGITALAX",
-    appUrl: "https://skyhunters.agentmeme.xyz/",
-    appIcon: "https://skyhunters.agentmeme.xyz/favicon.ico",
-    walletConnectProjectId:
-      process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || "",
-    chains: [chains.mainnet],
-    connectors: [],
-    transports: {
-      [chains.mainnet.id]: http(),
-    },
-  })
-);
+const config = createConfig({
+  chains: [chains.mainnet],
+  transports: {
+    [chains.mainnet.id]: http("https://rpc.lens.xyz"),
+  },
+  connectors: [
+    injected({
+      target: "metaMask",
+    }),
+  ],
+  ssr: true,
+});
 
 const queryClient = new QueryClient();
 
