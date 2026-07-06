@@ -5,7 +5,7 @@ import {
 
 export const LOCALES: string[] = ["en", "es"];
 
-export const INFURA_GATEWAY: string = "https://thedial.infura-ipfs.io/ipfs/";
+export const INFURA_GATEWAY: string = "https://cdn.digitalax.xyz/ipfs/";
 
 export const NETWORKS = {
   LENS_TESTNET: {

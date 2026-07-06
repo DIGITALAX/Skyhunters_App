@@ -1,10 +1,6 @@
 import { NextResponse } from "next/server";
 
-const projectId = process.env.INFURA_PROJECT_ID;
-const projectSecret = process.env.INFURA_SECRET_KEY;
-
-const auth =
-  "Basic " + Buffer.from(projectId + ":" + projectSecret).toString("base64");
+const auth = "Bearer " + process.env.IPFS_ADD_KEY;
 
 export async function POST(req: Request) {
   try {
@@ -27,7 +23,7 @@ export async function POST(req: Request) {
       body.append("file", blob);
     }
     
-    const response = await fetch("https://ipfs.infura.io:5001/api/v0/add", {
+    const response = await fetch("https://cdn.digitalax.xyz/api/v0/add", {
       method: "POST",
       headers: {
         authorization: auth,
